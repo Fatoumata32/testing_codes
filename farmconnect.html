@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmConnect Senegal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2d5016;
+            --light-green: #4a7c59;
+            --accent-yellow: #f4d03f;
+            --earth-brown: #8b4513;
+            --sky-blue: #87ceeb;
+            --text-dark: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white !important;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--accent-yellow) !important;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(45,80,22,0.8) 0%, rgba(74,124,89,0.8) 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="farm" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="50" cy="50" r="2" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23farm)"/></svg>');
+            padding: 100px 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(244,208,63,0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .btn-hero {
+            background: linear-gradient(135deg, var(--accent-yellow) 0%, #f7dc6f 100%);
+            color: var(--primary-green);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(244,208,63,0.3);
+        }
+
+        .btn-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(244,208,63,0.4);
+            color: var(--primary-green);
+        }
+
+        /* Language Selector */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .language-btn {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid var(--primary-green);
+            color: var(--primary-green);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 0 5px;
+        }
+
+        .language-btn.active,
+        .language-btn:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        /* Main Content Cards */
+        .main-content {
+            padding: 80px 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--light-green);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+        }
+
+        /* Weather Section */
+        .weather-card {
+            background: linear-gradient(135deg, var(--sky-blue) 0%, #edf0b8 100%);
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .weather-main {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .weather-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Tips Section */
+        .tips-section {
+            background: white;
+        }
+
+        .crop-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .crop-btn {
+            background: var(--light-green);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .crop-btn.active,
+        .crop-btn:hover {
+            background: var(--primary-green);
+            transform: scale(1.05);
+        }
+
+        .tip-item {
+            background: #f8f9fa;
+            border-left: 4px solid var(--light-green);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .tip-item:hover {
+            background: #e9ecef;
+            transform: translateX(10px);
+        }
+
+        /* Chat Section */
+        .chat-container {
+            height: 400px;
+            border: 2px solid var(--light-green);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: white;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .chat-input-container {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            padding: 10px 20px;
+            outline: none;
+        }
+
+        .chat-send-btn {
+            background: var(--light-green);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chat-send-btn:hover {
+            background: var(--primary-green);
+            transform: scale(1.1);
+        }
+
+        .chat-message {
+            margin: 10px 0;
+            padding: 12px 18px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .chat-message.user {
+            background: var(--light-green);
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .chat-message.bot {
+            background: #f1f1f1;
+            color: var(--text-dark);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Impact Dashboard */
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+        }
+
+        .stat-card:hover::after {
+            animation: shine 0.6s ease-in-out;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-green);
+            color: white;
+            padding: 40px 0 20px 0;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h5 {
+            color: var(--accent-yellow);
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent-yellow);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--accent-yellow);
+            color: var(--primary-green);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .feature-card {
+                padding: 20px;
+            }
+            
+            .weather-main {
+                font-size: 2rem;
+            }
+            
+            .language-selector {
+                position: static;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary-green);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Utility Classes */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-padding {
+            padding: 60px 0;
+        }
+
+        .card-hover-effect {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover-effect:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <button class="language-btn active" data-lang="fr">Français</button>
+        <button class="language-btn" data-lang="wo">Wolof</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <i class="fas fa-seedling"></i>
+                <span data-translate="app_title">FarmConnect Senegal</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home" data-translate="nav_home">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tips" data-translate="nav_tips">Conseils</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#chat" data-translate="nav_chat">Assistant</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="community.html" data-translate="nav_community">Communauté</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="investors.html" data-translate="nav_investors">Investisseurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#impact" data-translate="nav_impact">Impact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title" data-translate="hero_title">Connectez-vous à l'Agriculture Moderne</h1>
+                <p class="hero-subtitle" data-translate="hero_subtitle">Votre guide intelligent pour une agriculture prospère au Sénégal</p>
+                <button class="btn btn-hero" data-translate="hero_button">Commencer Maintenant</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Weather Section -->
+            <section id="weather" class="section-padding">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="feature-card weather-card">
+                            <div class="text-center">
+                                <i class="fas fa-cloud-sun feature-icon"></i>
+                                <h2 class="feature-title" data-translate="weather_title">Prévisions Météorologiques</h2>
+                                <div class="weather-main">
+                                    <span id="temperature">28°C</span>
+                                    <small id="weather-condition" data-translate="weather_condition">Ensoleillé</small>
+                                </div>
+                                <div class="weather-details">
+                                    <div class="weather-item">
+                                        <i class="fas fa-tint"></i>
+                                        <div><span data-translate="humidity">Humidité</span></div>
+                                        <div id="humidity">65%</div>
+                                    </div>
+                                    <div class="weather-item">
+                                        <i class="fas fa-wind"></i>
+                                        <div><span data-translate="wind">Vent</span></div>
+                                        <div id="wind-speed">12 km/h</div>
+                                    </div>
+                                    <div class="weather-item">
+                                        <i class="fas fa-umbrella"></i>
+                                        <div><span data-translate="rain_chance">Pluie</span></div>
+                                        <div id="rain-chance">20%</div>
+                                    </div>
+                                    <div class="weather-item">
+                                        <i class="fas fa-eye"></i>
+                                        <div><span data-translate="visibility">Visibilité</span></div>
+                                        <div id="visibility">10 km</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="loading" id="weather-loading">
+                                <div class="spinner"></div>
+                                <p data-translate="loading_weather">Chargement des données météo...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tips Section -->
+            <section id="tips" class="section-padding">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <h2 class="text-gradient" data-translate="tips_title">Conseils Agricoles Intelligents</h2>
+                        <p data-translate="tips_subtitle">Sélectionnez votre culture pour obtenir des conseils personnalisés</p>
+                    </div>
+                    
+                    <div class="crop-selector">
+                        <button class="crop-btn active" data-crop="millet" data-translate="crop_millet">Mil</button>
+                        <button class="crop-btn" data-crop="corn" data-translate="crop_corn">Maïs</button>
+                        <button class="crop-btn" data-crop="rice" data-translate="crop_rice">Riz</button>
+                        <button class="crop-btn" data-crop="peanut" data-translate="crop_peanut">Arachide</button>
+                        <button class="crop-btn" data-crop="tomato" data-translate="crop_tomato">Tomate</button>
+                    </div>
+                    
+                    <div class="feature-card tips-section">
+                        <div id="tips-content">
+                            <!-- Tips will be loaded here dynamically -->
+                        </div>
+                        <div class="loading" id="tips-loading">
+                            <div class="spinner"></div>
+                            <p data-translate="loading_tips">Chargement des conseils...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chat Section -->
+            <section id="chat" class="section-padding">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="text-center mb-4">
+                                <h2 class="text-gradient" data-translate="chat_title">Assistant Agricole Intelligent</h2>
+                                <p data-translate="chat_subtitle">Posez vos questions en français ou en wolof</p>
+                            </div>
+                            <div class="chat-container">
+                                <div class="chat-header">
+                                    <i class="fas fa-robot"></i>
+                                    <span data-translate="chat_assistant">Assistant FarmConnect</span>
+                                </div>
+                                <div class="chat-messages" id="chat-messages">
+                                    <div class="chat-message bot">
+                                        <span data-translate="welcome_message">Salut! Je suis là pour vous aider avec vos questions agricoles. Comment puis-je vous aider aujourd'hui?</span>
+                                    </div>
+                                </div>
+                                <div class="chat-input-container">
+                                    <input type="text" class="chat-input" id="chat-input" data-translate-placeholder="chat_placeholder" placeholder="Tapez votre question ici...">
+                                    <button class="chat-send-btn" id="chat-send">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Impact Dashboard -->
+            <section id="impact" class="section-padding">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <h2 class="text-gradient" data-translate="impact_title">Impact Attendu</h2>
+                        <p data-translate="impact_subtitle">Les résultats que nous espérons atteindre avec FarmConnect</p>
+                    </div>
+                    
+                    <div class="impact-stats">
+                        <div class="stat-card card-hover-effect">
+                            <span class="stat-number">+23%</span>
+                            <span class="stat-label" data-translate="yield_improvement">Amélioration du Rendement</span>
+                        </div>
+                        <div class="stat-card card-hover-effect">
+                            <span class="stat-number">-45%</span>
+                            <span class="stat-label" data-translate="loss_reduction">Réduction des Pertes</span>
+                        </div>
+                        <div class="stat-card card-hover-effect">
+                            <span class="stat-number">89%</span>
+                            <span class="stat-label" data-translate="practice_adoption">Adoption de Nouvelles Pratiques</span>
+                        </div>
+                        <div class="stat-card card-hover-effect">
+                            <span class="stat-number">5000+</span>
+                            <span class="stat-label" data-translate="farmers_reached">Agriculteurs Connectés</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h5 data-translate="footer_about">À Propos</h5>
+                    <p data-translate="footer_description">FarmConnect Senegal connecte les petits agriculteurs aux technologies modernes pour une agriculture durable et prospère.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h5 data-translate="footer_services">Services</h5>
+                    <ul>
+                        <li><a href="#" data-translate="service_weather">Prévisions Météo</a></li>
+                        <li><a href="#" data-translate="service_tips">Conseils Agricoles</a></li>
+                        <li><a href="#" data-translate="service_assistant">Assistant IA</a></li>
+                        <li><a href="#" data-translate="service_community">Communauté</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5 data-translate="footer_support">Support</h5>
+                    <ul>
+                        <li><a href="#" data-translate="support_help">Centre d'Aide</a></li>
+                        <li><a href="#" data-translate="support_contact">Contact</a></li>
+                        <li><a href="#" data-translate="support_faq">FAQ</a></li>
+                        <li><a href="#" data-translate="support_feedback">Commentaires</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5 data-translate="footer_contact">Contact</h5>
+                    <p><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</p>
+                    <p><i class="fas fa-phone"></i> +221 77 123 4567</p>
+                    <p><i class="fas fa-envelope"></i> info@farmconnect.sn</p>
+                </div>
+            </div>
+            <div class="text-center pt-3" style="border-top: 1px solid rgba(255,255,255,0.1);">
+                <p>&copy; 2024 FarmConnect Senegal. <span data-translate="footer_rights">Tous droits réservés.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Translation system
+        const translations = {
+            fr: {
+                app_title: "FarmConnect Senegal",
+                nav_home: "Accueil",
+                nav_weather: "Météo",
+                nav_tips: "Conseils",
+                nav_chat: "Assistant",
+                nav_impact: "Impact",
+                hero_title: "Connectez-vous à l'Agriculture Moderne",
+                hero_subtitle: "Votre guide intelligent pour une agriculture prospère au Sénégal",
+                hero_button: "Commencer Maintenant",
+                weather_title: "Prévisions Météorologiques",
+                weather_condition: "Ensoleillé",
+                humidity: "Humidité",
+                wind: "Vent",
+                rain_chance: "Pluie",
+                visibility: "Visibilité",
+                loading_weather: "Chargement des données météo...",
+                tips_title: "Conseils Agricoles Intelligents",
+                tips_subtitle: "Sélectionnez votre culture pour obtenir des conseils personnalisés",
+                crop_millet: "Mil",
+                crop_corn: "Maïs",
+                crop_rice: "Riz",
+                crop_peanut: "Arachide",
+                crop_tomato: "Tomate",
+                loading_tips: "Chargement des conseils...",
+                chat_title: "Assistant Agricole Intelligent",
+                chat_subtitle: "Posez vos questions en français ou en wolof",
+                chat_assistant: "Assistant FarmConnect",
+                welcome_message: "Salut! Je suis là pour vous aider avec vos questions agricoles. Comment puis-je vous aider aujourd'hui?",
+                chat_placeholder: "Tapez votre question ici...",
+                impact_title: "Impact Attendu",
+                impact_subtitle: "Les résultats que nous espérons atteindre avec FarmConnect",
+                yield_improvement: "Amélioration du Rendement",
+                loss_reduction: "Réduction des Pertes",
+                practice_adoption: "Adoption de Nouvelles Pratiques",
+                farmers_reached: "Agriculteurs Connectés",
+                footer_about: "À Propos",
+                footer_description: "FarmConnect Senegal connecte les petits agriculteurs aux technologies modernes pour une agriculture durable et prospère.",
+                footer_services: "Services",
+                service_weather: "Prévisions Météo",
+                service_tips: "Conseils Agricoles",
+                service_assistant: "Assistant IA",
+                service_community: "Communauté",
+                footer_support: "Support",
+                support_help: "Centre d'Aide",
+                support_contact: "Contact",
+                support_faq: "FAQ",
+                support_feedback: "Commentaires",
+                footer_contact: "Contact",
+                footer_rights: "Tous droits réservés."
+            },
+            wo: {
+                app_title: "FarmConnect Senegal",
+                nav_home: "Kër",
+                nav_weather: "Taw",
+                nav_tips: "Waxtaan",
+                nav_chat: "Ndimbaal",
+                nav_impact: "Njuumte",
+                hero_title: "Jëfandikoo ak Jëmm bu Bees",
+                hero_subtitle: "Sa ndimbaalkat bu baax ci jëmm gi am njariñ ci Senegaal",
+                hero_button: "Tambali Léegi",
+                weather_title: "Taw yi ñu ko wone",
+                weather_condition: "Njàng",
+                humidity: "Ndaw",
+                wind: "Paal",
+                rain_chance: "Taw",
+                visibility: "Gisoo",
+                loading_weather: "Daj taw yi...",
+                tips_title: "Waxtaan yu Baax ci Jëmm",
+                tips_subtitle: "Tann sa mburu ngir am waxtaan yu am solo",
+                crop_millet: "Souna",
+                crop_corn: "Mburu jaaw",
+                crop_rice: "Ceeb",
+                crop_peanut: "Gerte",
+                crop_tomato: "Xoñ",
+                loading_tips: "Daj waxtaan yi...",
+                chat_title: "Ndimbaalkat bu Jëmm",
+                chat_subtitle: "Laaj sa làkk ci wolof walla ci faransi",
+                chat_assistant: "Ndimbaalkat FarmConnect",
+                welcome_message: "Salaam! Maa ngi fi ngir dimbal la ci sa làkk yu jëmm. Naka laa mën a dimbal la?",
+                chat_placeholder: "Bind sa làkk fi...",
+                impact_title: "Li ñu soxla",
+                impact_subtitle: "Ay njuumte yu ñu soxla ak FarmConnect",
+                yield_improvement: "Yokkute ci Njuumte",
+                loss_reduction: "Wàññi Njettalu",
+                practice_adoption: "Jëfandikoo Jëfu Bees",
+                farmers_reached: "Jëmmkat yu Jëfandikoo",
+                footer_about: "Ci Kanamu",
+                footer_description: "FarmConnect Senegal di jëfandikoo jëmmkat yu ndaw ak teknolosi yu bees ngir jëmm bu dëgga te am njariñ.",
+                footer_services: "Jumtuwaay",
+                service_weather: "Taw yi ñu ko wone",
+                service_tips: "Waxtaan ci Jëmm",
+                service_assistant: "Ndimbaalkat bu Xam",
+                service_community: "Réew mi",
+                footer_support: "Ndimbal",
+                support_help: "Kër bu Ndimbal",
+                support_contact: "Jokkoo",
+                support_faq: "Làkk yi baax",
+                support_feedback: "Sa xalaat",
+                footer_contact: "Jokkoo",
+                footer_rights: "Yépp mooy sax."
+            }
+        };
+
+        let currentLang = 'fr';
+
+        // Language switching
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentLang = btn.dataset.lang;
+                document.querySelectorAll('.language-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                updateLanguage();
+            });
+        });
+
+        function updateLanguage() {
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.dataset.translate;
+                if (translations[currentLang][key]) {
+                    element.textContent = translations[currentLang][key];
+                }
+            });
+
+            // Update placeholder
+            const chatInput = document.getElementById('chat-input');
+            if (chatInput) {
+                chatInput.placeholder = translations[currentLang].chat_placeholder;
+            }
+        }
+
+        // Weather functionality
+        function updateWeather() {
+            const weatherData = {
+                temperature: Math.floor(Math.random() * 15) + 20,
+                humidity: Math.floor(Math.random() * 40) + 40,
+                windSpeed: Math.floor(Math.random() * 20) + 5,
+                rainChance: Math.floor(Math.random() * 80),
+                visibility: Math.floor(Math.random() * 10) + 5
+            };
+
+            document.getElementById('temperature').textContent = weatherData.temperature + '°C';
+            document.getElementById('humidity').textContent = weatherData.humidity + '%';
+            document.getElementById('wind-speed').textContent = weatherData.windSpeed + ' km/h';
+            document.getElementById('rain-chance').textContent = weatherData.rainChance + '%';
+            document.getElementById('visibility').textContent = weatherData.visibility + ' km';
+        }
+
+        // Tips functionality
+        const tipsData = {
+            fr: {
+                millet: [
+                    {
+                        title: "Préparation du Sol",
+                        content: "Labourez le sol à une profondeur de 15-20 cm et incorporez du fumier bien décomposé."
+                    },
+                    {
+                        title: "Période de Semis",
+                        content: "Semez au début de la saison des pluies, généralement entre juin et juillet."
+                    },
+                    {
+                        title: "Espacement",
+                        content: "Respectez un espacement de 20-25 cm entre les plants pour une croissance optimale."
+                    }
+                ],
+                corn: [
+                    {
+                        title: "Sélection des Variétés",
+                        content: "Choisissez des variétés adaptées au climat local comme l'EVDT 97 ou Obatanpa."
+                    },
+                    {
+                        title: "Fertilisation",
+                        content: "Appliquez de l'engrais NPK (15-15-15) à raison de 200kg/ha au moment du semis."
+                    },
+                    {
+                        title: "Irrigation",
+                        content: "Maintenez un arrosage régulier, surtout pendant la floraison et la formation des épis."
+                    }
+                ],
+                rice: [
+                    {
+                        title: "Préparation de la Pépinière",
+                        content: "Préparez des pépinières dans un terrain plat avec un bon drainage."
+                    },
+                    {
+                        title: "Repiquage",
+                        content: "Repiquez les plants âgés de 20-25 jours avec 2-3 plants par poquet."
+                    },
+                    {
+                        title: "Gestion de l'Eau",
+                        content: "Maintenez une lame d'eau de 5-10 cm pendant la phase de croissance active."
+                    }
+                ],
+                peanut: [
+                    {
+                        title: "Inoculation",
+                        content: "Inoculez les graines avec des rhizobiums pour améliorer la fixation d'azote."
+                    },
+                    {
+                        title: "Buttage",
+                        content: "Effectuez le buttage 30-35 jours après le semis pour favoriser la formation des gousses."
+                    },
+                    {
+                        title: "Récolte",
+                        content: "Récoltez quand les feuilles jaunissent, généralement 90-120 jours après le semis."
+                    }
+                ],
+                tomato: [
+                    {
+                        title: "Tuteurage",
+                        content: "Installez des tuteurs pour soutenir les plants et éviter que les fruits touchent le sol."
+                    },
+                    {
+                        title: "Taille",
+                        content: "Supprimez les gourmands et les feuilles basses pour améliorer l'aération."
+                    },
+                    {
+                        title: "Traitement Préventif",
+                        content: "Pulvérisez avec de la bouillie bordelaise pour prévenir les maladies fongiques."
+                    }
+                ]
+            },
+            wo: {
+                millet: [
+                    {
+                        title: "Soxlal Suuf si",
+                        content: "Weccal suuf si ci 15-20 cm te dundu tay bu baax bu reer."
+                    },
+                    {
+                        title: "Jamono bu Weccale",
+                        content: "Weccal bi taw yi tamit, dina am ci juni ak juillet."
+                    },
+                    {
+                        title: "Beneen ak Beneen",
+                        content: "Yor 20-25 cm ci biir mburu yo nekk ngir baax bu guddi."
+                    }
+                ],
+                corn: [
+                    {
+                        title: "Tann Mburu yi",
+                        content: "Tann mburu yu am solo ci taw bi am, njël EVDT 97 walla Obatanpa."
+                    },
+                    {
+                        title: "Dundu Alkaati",
+                        content: "Jël alkaati NPK (15-15-15) 200kg ci hektaar bu nekk bi nga weccal."
+                    },
+                    {
+                        title: "Ndox",
+                        content: "Sori ndox rek rek, rawatina bi ngeen noppante ak bi ñër yi di soxla."
+                    }
+                ],
+                rice: [
+                    {
+                        title: "Soxlal Kër bu Soxlale",
+                        content: "Def kër bu soxlale ci bunt bu pëkk bu am drainage bu baax."
+                    },
+                    {
+                        title: "Toppale",
+                        content: "Topp mburu yi am 20-25 fan ak 2-3 mburu ci benn poquet."
+                    },
+                    {
+                        title: "Yobalal Ndox",
+                        content: "Am ndox 5-10 cm ci jamano bi mburu yi di yokk."
+                    }
+                ],
+                peanut: [
+                    {
+                        title: "Inoculation",
+                        content: "Jël rhizobium ci mburu yi ngir baax bu yàgg asot."
+                    },
+                    {
+                        title: "Buttage",
+                        content: "Def buttage 30-35 fan ci ginnaaw weccale ngir gousses yi soxla."
+                    },
+                    {
+                        title: "Mbootaay",
+                        content: "Mbootaay bi ngeen gis ne gaal yi rawul, 90-120 fan ci ginnaaw weccale."
+                    }
+                ],
+                tomato: [
+                    {
+                        title: "Tuteurage",
+                        content: "Yor tuteur yo ngir mburu yi am yëf te ñër yi bañ suuf si."
+                    },
+                    {
+                        title: "Res",
+                        content: "Res gourmand yi ak gaal yi nekk ginnaaw ngir paal mi dugg."
+                    },
+                    {
+                        title: "Laay Ngir Yëp",
+                        content: "Sànn ak bouillie bordelaise ngir tëral yàkkar yu baax."
+                    }
+                ]
+            }
+        };
+
+        function loadTips(crop) {
+            const tipsContainer = document.getElementById('tips-content');
+            const loading = document.getElementById('tips-loading');
+            
+            loading.classList.add('show');
+            tipsContainer.innerHTML = '';
+            
+            setTimeout(() => {
+                const tips = tipsData[currentLang][crop];
+                let html = '';
+                
+                tips.forEach(tip => {
+                    html += `
+                        <div class="tip-item">
+                            <h5 style="color: var(--primary-green); margin-bottom: 10px;">
+                                <i class="fas fa-leaf" style="margin-right: 10px;"></i>
+                                ${tip.title}
+                            </h5>
+                            <p>${tip.content}</p>
+                        </div>
+                    `;
+                });
+                
+                loading.classList.remove('show');
+                tipsContainer.innerHTML = html;
+            }, 800);
+        }
+
+        // Crop selection
+        document.querySelectorAll('.crop-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.crop-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                loadTips(btn.dataset.crop);
+            });
+        });
+
+        // Chat functionality
+        const chatResponses = {
+            fr: [
+                "Excellente question ! Pour améliorer vos rendements, je recommande d'analyser votre sol et d'adapter votre fertilisation en conséquence.",
+                "Pendant la saison sèche, concentrez-vous sur l'irrigation goutte à goutte et le paillage pour conserver l'humidité.",
+                "Les rotations culturales sont essentielles ! Alternez entre légumineuses et céréales pour maintenir la fertilité du sol.",
+                "Pour lutter contre les parasites de manière naturelle, utilisez des extraits de neem ou installez des pièges à phéromones.",
+                "La météo annonce de la pluie dans 2 jours. C'est le moment idéal pour préparer vos semis !",
+                "N'hésitez pas à rejoindre notre communauté d'agriculteurs pour partager vos expériences et apprendre des autres."
+            ],
+            wo: [
+                "Làkk bu baax laa ! Ngir baax sa njuumte, xam sa suuf te weccal alkaati yu am solo.",
+                "Ci jamano bu reer, jëfandikoo arrosage goutte à goutte ak paillage ngir sukkandiku ndaw.",
+                "Soppalel mburu yi baax na ! Weccal légumineuses ak céréales ngir suuf si dugg baax.",
+                "Ngir xeex ak yàkkar yu baax, jëfandikoo neem walla yor piège à phéromones.",
+                "Taw bi wax ne taw dinañu ko am ca 2 fan. Léegi laa baax ngir soxlal weccale !",
+                "Duggal ci réew mi jëmmkat yo ngir wax sa xalaat ak jàng ku leen."
+            ]
+        };
+
+        function addMessage(message, isUser = false) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${isUser ? 'user' : 'bot'}`;
+            messageDiv.textContent = message;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function getBotResponse() {
+            const responses = chatResponses[currentLang];
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        document.getElementById('chat-send').addEventListener('click', sendMessage);
+        document.getElementById('chat-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            
+            if (message) {
+                addMessage(message, true);
+                input.value = '';
+                
+                // Simulate bot response delay
+                setTimeout(() => {
+                    addMessage(getBotResponse());
+                }, 1000 + Math.random() * 1000);
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            updateWeather();
+            loadTips('millet');
+            
+            // Update weather every 10 minutes
+            setInterval(updateWeather, 600000);
+            
+            // Add some interactivity to hero button
+            document.querySelector('.btn-hero').addEventListener('click', () => {
+                document.querySelector('#weather').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+
+            // Initialize language
+            updateLanguage();
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'linear-gradient(135deg, rgba(45,80,22,0.95) 0%, rgba(74,124,89,0.95) 100%)';
+                navbar.style.backdropFilter = 'blur(10px)';
+            } else {
+                navbar.style.background = 'linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%)';
+                navbar.style.backdropFilter = 'none';
+            }
+        });
+
+        // Add loading states for better UX
+        function showLoading(elementId) {
+            document.getElementById(elementId).classList.add('show');
+        }
+
+        function hideLoading(elementId) {
+            document.getElementById(elementId).classList.remove('show');
+        }
+
+        // Simulate API calls for weather data
+        function fetchWeatherData() {
+            showLoading('weather-loading');
+            
+            setTimeout(() => {
+                updateWeather();
+                hideLoading('weather-loading');
+            }, 1500);
+        }
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Add click effects to buttons
+        document.querySelectorAll('.btn, .crop-btn, .language-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255,255,255,0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = (e.clientX - e.target.offsetLeft) + 'px';
+                ripple.style.top = (e.clientY - e.target.offsetTop) + 'px';
+                ripple.style.width = ripple.style.height = '20px';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add ripple animation CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            .btn, .crop-btn, .language-btn {
+                position: relative;
+                overflow: hidden;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
