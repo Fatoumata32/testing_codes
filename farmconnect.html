@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,8 +33,9 @@
         /* Header Styles */
         .navbar {
             background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             padding: 1rem 0;
+            transition: all 0.3s ease;
         }
 
         .navbar-brand {
@@ -46,7 +48,7 @@
         }
 
         .navbar-nav .nav-link {
-            color: rgba(255,255,255,0.9) !important;
+            color: rgba(255, 255, 255, 0.9) !important;
             font-weight: 500;
             margin: 0 10px;
             transition: all 0.3s ease;
@@ -59,7 +61,7 @@
 
         /* Hero Section */
         .hero-section {
-            background: linear-gradient(135deg, rgba(45,80,22,0.8) 0%, rgba(74,124,89,0.8) 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="farm" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="50" cy="50" r="2" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23farm)"/></svg>');
+            background: linear-gradient(135deg, rgba(45, 80, 22, 0.8) 0%, rgba(74, 124, 89, 0.8) 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="farm" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="50" cy="50" r="2" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23farm)"/></svg>');
             padding: 100px 0;
             text-align: center;
             color: white;
@@ -74,13 +76,18 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(244,208,63,0.1) 50%, transparent 70%);
+            background: linear-gradient(45deg, transparent 30%, rgba(244, 208, 63, 0.1) 50%, transparent 70%);
             animation: shimmer 3s infinite;
         }
 
         @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
         }
 
         .hero-content {
@@ -92,7 +99,7 @@
             font-size: 3.5rem;
             font-weight: bold;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .hero-subtitle {
@@ -110,38 +117,53 @@
             font-weight: bold;
             border-radius: 50px;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(244,208,63,0.3);
+            box-shadow: 0 8px 20px rgba(244, 208, 63, 0.3);
         }
 
         .btn-hero:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(244,208,63,0.4);
+            box-shadow: 0 12px 25px rgba(244, 208, 63, 0.4);
             color: var(--primary-green);
         }
 
         /* Language Selector */
         .language-selector {
-            position: fixed;
-            top: 20px;
-            right: 20px;
+            position: relative;
             z-index: 1000;
+            display: flex;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .language-selector:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         .language-btn {
-            background: rgba(255,255,255,0.9);
+            background: transparent;
             border: 2px solid var(--primary-green);
             color: var(--primary-green);
             padding: 8px 16px;
             border-radius: 25px;
             font-weight: bold;
             transition: all 0.3s ease;
-            margin: 0 5px;
+            cursor: pointer;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 90px;
         }
 
         .language-btn.active,
         .language-btn:hover {
             background: var(--primary-green);
             color: white;
+            transform: scale(1.05);
         }
 
         /* Main Content Cards */
@@ -154,11 +176,13 @@
             border-radius: 20px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             border: none;
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
         }
 
         .feature-card::before {
@@ -171,9 +195,14 @@
             background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
         }
 
+        .feature-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            transform: translateY(-10px) !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
 
         .feature-icon {
@@ -194,7 +223,7 @@
         .weather-card {
             background: linear-gradient(135deg, var(--sky-blue) 0%, #edf0b8 100%);
             color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .weather-main {
@@ -212,7 +241,7 @@
         .weather-item {
             text-align: center;
             padding: 15px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 15px;
             backdrop-filter: blur(10px);
         }
@@ -238,6 +267,8 @@
             border-radius: 25px;
             font-weight: 500;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .crop-btn.active,
@@ -264,7 +295,7 @@
         .modal-content {
             border-radius: 20px;
             border: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .modal-header {
@@ -298,6 +329,8 @@
             font-weight: 500;
             text-align: center;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .crop-btn-modal:hover {
@@ -390,6 +423,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -421,7 +455,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             transform: rotate(45deg);
             transition: all 0.6s;
         }
@@ -431,8 +465,13 @@
         }
 
         @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
         }
 
         .stat-number {
@@ -476,7 +515,7 @@
         }
 
         .footer-section ul li a {
-            color: rgba(255,255,255,0.8);
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             transition: color 0.3s ease;
         }
@@ -495,7 +534,7 @@
             display: inline-block;
             width: 40px;
             height: 40px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -516,23 +555,29 @@
             .hero-title {
                 font-size: 2.5rem;
             }
-            
+
             .hero-subtitle {
                 font-size: 1.1rem;
             }
-            
+
             .feature-card {
                 padding: 20px;
             }
-            
+
             .weather-main {
                 font-size: 2rem;
             }
-            
+
             .language-selector {
-                position: static;
-                text-align: center;
-                margin-bottom: 20px;
+                top: 10px;
+                right: 10px;
+                padding: 6px;
+            }
+
+            .language-btn {
+                padding: 6px 12px;
+                min-width: 80px;
+                font-size: 0.9rem;
             }
 
             .additional-crops-grid {
@@ -562,8 +607,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Utility Classes */
@@ -584,16 +634,158 @@
 
         .card-hover-effect:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-plans {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .payment-plan {
+            background: var(--light-green);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Modern Tools Section */
+        .tools-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid var(--light-green);
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            color: var(--accent-yellow);
+            background: var(--primary-green);
+            padding: 15px;
+            border-radius: 50%;
+        }
+
+        .tool-price {
+            background: var(--accent-yellow);
+            color: var(--primary-green);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .btn-tools {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-tools:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(45, 80, 22, 0.3);
+        }
+
+        /* Recovery Section */
+        .recovery-section {
+            background: linear-gradient(135deg, white 0%, white 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #032b12;
+        }
+
+        .recovery-alert {
+            background: #032b12;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recovery-step {
+            background: white;
+            border-left: 4px solid #032b12;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .recovery-step::before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: -15px;
+            top: 15px;
+            background: #032b12;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .recovery-steps {
+            counter-reset: step-counter;
+        }
+
+        /* Ripple effect for buttons */
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .btn,
+        .crop-btn,
+        .crop-btn-modal,
+        .language-btn {
+            position: relative;
+            overflow: hidden;
         }
     </style>
 </head>
+
 <body>
     <!-- Language Selector -->
-    <div class="language-selector">
-        <button class="language-btn active" data-lang="fr">Français</button>
-        <button class="language-btn" data-lang="wo">Wolof</button>
-    </div>
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -613,7 +805,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#tips" data-translate="nav_tips">Conseils</a>
                     </li>
-                  
+                    <li class="nav-item">
+                        <a class="nav-link" href="#chat" data-translate="nav_chat">Assistant</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="community.html" data-translate="nav_community">Communauté</a>
                     </li>
@@ -621,9 +815,18 @@
                         <a class="nav-link" href="investors.html" data-translate="nav_investors">Investisseurs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="tools.html" data-translate="nav_tools">Outils</a>
+                        <a class="nav-link" href="#impact" data-translate="nav_impact">Impact</a>
                     </li>
                 </ul>
+                <div class="language-selector">
+                    <button class="language-btn active" data-lang="fr" aria-label="Switch to French">
+                        <span>Français</span>
+                    </button>
+                    <button class="language-btn" data-lang="wo" aria-label="Switch to Wolof">
+                        <span>Wolof</span>
+                    </button>
+                </div>
+
             </div>
         </div>
     </nav>
@@ -633,7 +836,8 @@
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title" data-translate="hero_title">Connectez-vous à l'Agriculture Moderne</h1>
-                <p class="hero-subtitle" data-translate="hero_subtitle">Votre guide intelligent pour une agriculture prospère au Sénégal</p>
+                <p class="hero-subtitle" data-translate="hero_subtitle">Votre guide intelligent pour une agriculture
+                    prospère au Sénégal</p>
                 <button class="btn btn-hero" data-translate="hero_button">Commencer Maintenant</button>
             </div>
         </div>
@@ -691,18 +895,20 @@
                 <div class="container">
                     <div class="text-center mb-5">
                         <h2 class="text-gradient" data-translate="tips_title">Conseils Agricoles Intelligents</h2>
-                        <p data-translate="tips_subtitle">Sélectionnez votre culture pour obtenir des conseils personnalisés</p>
+                        <p data-translate="tips_subtitle">Sélectionnez votre culture pour obtenir des conseils
+                            personnalisés</p>
                     </div>
-                    
+
                     <div class="crop-selector">
                         <button class="crop-btn active" data-crop="millet" data-translate="crop_millet">Mil</button>
                         <button class="crop-btn" data-crop="corn" data-translate="crop_corn">Maïs</button>
                         <button class="crop-btn" data-crop="rice" data-translate="crop_rice">Riz</button>
                         <button class="crop-btn" data-crop="peanut" data-translate="crop_peanut">Arachide</button>
                         <button class="crop-btn" data-crop="tomato" data-translate="crop_tomato">Tomate</button>
-                        <button class="crop-btn" data-bs-toggle="modal" data-bs-target="#moreCropsModal" data-translate="more_crops">Plus +</button>
+                        <button class="crop-btn" data-bs-toggle="modal" data-bs-target="#moreCropsModal"
+                            data-translate="more_crops">Plus +</button>
                     </div>
-                    
+
                     <div class="feature-card tips-section">
                         <div id="tips-content">
                             <!-- Tips will be loaded here dynamically -->
@@ -716,34 +922,72 @@
             </section>
 
             <!-- More Crops Modal -->
-            <div class="modal fade" id="moreCropsModal" tabindex="-1" aria-labelledby="moreCropsModalLabel" aria-hidden="true">
+            <div class="modal fade" id="moreCropsModal" tabindex="-1" aria-labelledby="moreCropsModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="moreCropsModalLabel" data-translate="more_crops_title">Autres Cultures</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h5 class="modal-title" id="moreCropsModalLabel" data-translate="more_crops_title">Autres
+                                Cultures</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="additional-crops-grid">
-                                <button class="crop-btn-modal" data-crop="cotton" data-translate="crop_cotton">Coton</button>
-                                <button class="crop-btn-modal" data-crop="mango" data-translate="crop_mango">Mangue</button>
-                                <button class="crop-btn-modal" data-crop="greenbean" data-translate="crop_greenbean">Haricot Vert</button>
-                                <button class="crop-btn-modal" data-crop="melon" data-translate="crop_melon">Melon</button>
-                                <button class="crop-btn-modal" data-crop="sweetcorn" data-translate="crop_sweetcorn">Maïs Doux</button>
-                                <button class="crop-btn-modal" data-crop="watermelon" data-translate="crop_watermelon">Pastèque</button>
-                                <button class="crop-btn-modal" data-crop="pepper" data-translate="crop_pepper">Piment</button>
-                                <button class="crop-btn-modal" data-crop="sorghum" data-translate="crop_sorghum">Sorgho</button>
-                                <button class="crop-btn-modal" data-crop="onion" data-translate="crop_onion">Oignon</button>
-                                <button class="crop-btn-modal" data-crop="potato" data-translate="crop_potato">Pomme de Terre</button>
-                                <button class="crop-btn-modal" data-crop="sweetpotato" data-translate="crop_sweetpotato">Patate</button>
-                                <button class="crop-btn-modal" data-crop="wheat" data-translate="crop_wheat">Blé</button>
-                                <button class="crop-btn-modal" data-crop="bissap" data-translate="crop_bissap">Bissap</button>
-                                <button class="crop-btn-modal" data-crop="cowpea" data-translate="crop_cowpea">Niébé</button>
-                                <button class="crop-btn-modal" data-crop="sugarcane" data-translate="crop_sugarcane">Sucre</button>
-                                <button class="crop-btn-modal" data-crop="cassava" data-translate="crop_cassava">Manioc</button>
+                                <button class="crop-btn-modal" data-crop="cotton"
+                                    data-translate="crop_cotton">Coton</button>
+                                <button class="crop-btn-modal" data-crop="mango"
+                                    data-translate="crop_mango">Mangue</button>
+                                <button class="crop-btn-modal" data-crop="greenbean"
+                                    data-translate="crop_greenbean">Haricot Vert</button>
+                                <button class="crop-btn-modal" data-crop="melon"
+                                    data-translate="crop_melon">Melon</button>
+                                <button class="crop-btn-modal" data-crop="sweetcorn"
+                                    data-translate="crop_sweetcorn">Maïs Doux</button>
+                                <button class="crop-btn-modal" data-crop="watermelon"
+                                    data-translate="crop_watermelon">Pastèque</button>
+                                <button class="crop-btn-modal" data-crop="pepper"
+                                    data-translate="crop_pepper">Piment</button>
+                                <button class="crop-btn-modal" data-crop="sorghum"
+                                    data-translate="crop_sorghum">Sorgho</button>
+                                <button class="crop-btn-modal" data-crop="onion"
+                                    data-translate="crop_onion">Oignon</button>
+                                <button class="crop-btn-modal" data-crop="potato" data-translate="crop_potato">Pomme de
+                                    Terre</button>
+                                <button class="crop-btn-modal" data-crop="sweetpotato"
+                                    data-translate="crop_sweetpotato">Patate</button>
+                                <button class="crop-btn-modal" data-crop="wheat"
+                                    data-translate="crop_wheat">Blé</button>
+                                <button class="crop-btn-modal" data-crop="bissap"
+                                    data-translate="crop_bissap">Bissap</button>
+                                <button class="crop-btn-modal" data-crop="cowpea"
+                                    data-translate="crop_cowpea">Niébé</button>
+                                <button class="crop-btn-modal" data-crop="sugarcane"
+                                    data-translate="crop_sugarcane">Sucre</button>
+                                <button class="crop-btn-modal" data-crop="cassava"
+                                    data-translate="crop_cassava">Manioc</button>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Section récupération culture -->
+            <div class="recovery-section mt-4">
+                <div class="recovery-alert">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span data-translate="recovery_alert"><b>Votre culture se fane ou se dégrade ?</b> Voici comment la
+                        sauver :</span>
+                </div>
+                <div class="recovery-steps">
+                    <div class="recovery-step" data-translate="recovery_step1">Arrosez modérément, sans excès d'eau.
+                    </div>
+                    <div class="recovery-step" data-translate="recovery_step2">Apportez un engrais foliaire adapté.
+                    </div>
+                    <div class="recovery-step" data-translate="recovery_step3">Retirez les feuilles malades ou abîmées.
+                    </div>
+                    <div class="recovery-step" data-translate="recovery_step4">Protégez la culture du soleil excessif
+                        (ombrage léger).</div>
                 </div>
             </div>
 
@@ -753,7 +997,8 @@
                     <div class="row">
                         <div class="col-lg-8 mx-auto">
                             <div class="text-center mb-4">
-                                <h2 class="text-gradient" data-translate="chat_title">Assistant Agricole Intelligent</h2>
+                                <h2 class="text-gradient" data-translate="chat_title">Assistant Agricole Intelligent
+                                </h2>
                                 <p data-translate="chat_subtitle">Posez vos questions en français ou en wolof</p>
                             </div>
                             <div class="chat-container">
@@ -763,11 +1008,14 @@
                                 </div>
                                 <div class="chat-messages" id="chat-messages">
                                     <div class="chat-message bot">
-                                        <span data-translate="welcome_message">Salut! Je suis là pour vous aider avec vos questions agricoles. Comment puis-je vous aider aujourd'hui?</span>
+                                        <span data-translate="welcome_message">Salut! Je suis là pour vous aider avec
+                                            vos questions agricoles. Comment puis-je vous aider aujourd'hui?</span>
                                     </div>
                                 </div>
                                 <div class="chat-input-container">
-                                    <input type="text" class="chat-input" id="chat-input" data-translate-placeholder="chat_placeholder" placeholder="Tapez votre question ici...">
+                                    <input type="text" class="chat-input" id="chat-input"
+                                        data-translate-placeholder="chat_placeholder"
+                                        placeholder="Tapez votre question ici...">
                                     <button class="chat-send-btn" id="chat-send">
                                         <i class="fas fa-paper-plane"></i>
                                     </button>
@@ -783,9 +1031,10 @@
                 <div class="container">
                     <div class="text-center mb-5">
                         <h2 class="text-gradient" data-translate="impact_title">Impact Attendu</h2>
-                        <p data-translate="impact_subtitle">Les résultats que nous espérons atteindre avec FarmConnect</p>
+                        <p data-translate="impact_subtitle">Les résultats que nous espérons atteindre avec FarmConnect
+                        </p>
                     </div>
-                    
+
                     <div class="impact-stats">
                         <div class="stat-card card-hover-effect">
                             <span class="stat-number">+23%</span>
@@ -797,7 +1046,8 @@
                         </div>
                         <div class="stat-card card-hover-effect">
                             <span class="stat-number">89%</span>
-                            <span class="stat-label" data-translate="practice_adoption">Adoption de Nouvelles Pratiques</span>
+                            <span class="stat-label" data-translate="practice_adoption">Adoption de Nouvelles
+                                Pratiques</span>
                         </div>
                         <div class="stat-card card-hover-effect">
                             <span class="stat-number">5000+</span>
@@ -815,7 +1065,8 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h5 data-translate="footer_about">À Propos</h5>
-                    <p data-translate="footer_description">FarmConnect Senegal connecte les petits agriculteurs aux technologies modernes pour une agriculture durable et prospère.</p>
+                    <p data-translate="footer_description">FarmConnect Senegal connecte les petits agriculteurs aux
+                        technologies modernes pour une agriculture durable et prospère.</p>
                     <div class="social-links">
                         <a href="#" class="social-link" aria-label="Facebook">
                             <i class="fab fa-facebook-f"></i>
@@ -864,10 +1115,10 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Custom JavaScript -->
     <script>
-        // Translation system
+        // Enhanced Translation System
         const translations = {
             fr: {
                 app_title: "FarmConnect Senegal",
@@ -937,7 +1188,12 @@
                 support_faq: "FAQ",
                 support_feedback: "Commentaires",
                 footer_contact: "Contact",
-                footer_rights: "Tous droits réservés."
+                footer_rights: "Tous droits réservés.",
+                recovery_alert: "<b>Votre culture se fane ou se dégrade ?</b> Voici comment la sauver :",
+                recovery_step1: "Arrosez modérément, sans excès d'eau.",
+                recovery_step2: "Apportez un engrais foliaire adapté.",
+                recovery_step3: "Retirez les feuilles malades ou abîmées.",
+                recovery_step4: "Protégez la culture du soleil excessif (ombrage léger)."
             },
             wo: {
                 app_title: "FarmConnect Senegal",
@@ -1007,36 +1263,83 @@
                 support_faq: "Làkk yi baax",
                 support_feedback: "Sa xalaat",
                 footer_contact: "Jokkoo",
-                footer_rights: "Yépp mooy sax."
+                footer_rights: "Yépp mooy sax.",
+                recovery_alert: "<b>Sa mburu di daw walla di bon ?</b> Naka la nga ko man a fàgg :",
+                recovery_step1: "Sori ndox bu ndaw, waññi ndox bu bari.",
+                recovery_step2: "Jël alkaati foliaire bu am solo.",
+                recovery_step3: "Rey gaal yi ñu bon walla ñu ñàkk.",
+                recovery_step4: "Rey jant bi gën a tàng (ombrage léger)."
             }
         };
 
-        let currentLang = 'fr';
+        // Store current language in localStorage for persistence
+        let currentLang = localStorage.getItem('farmConnectLang') || 'fr';
 
-        // Language switching
-        document.querySelectorAll('.language-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                currentLang = btn.dataset.lang;
-                document.querySelectorAll('.language-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                updateLanguage();
-            });
-        });
-
+        // Function to update all translatable elements
         function updateLanguage() {
+            // Update all elements with data-translate attribute
             document.querySelectorAll('[data-translate]').forEach(element => {
                 const key = element.dataset.translate;
                 if (translations[currentLang][key]) {
-                    element.textContent = translations[currentLang][key];
+                    if (element.hasAttribute('data-translate-placeholder')) {
+                        element.placeholder = translations[currentLang][key];
+                    } else {
+                        element.innerHTML = translations[currentLang][key];
+                    }
                 }
             });
 
-            // Update placeholder
-            const chatInput = document.getElementById('chat-input');
-            if (chatInput) {
-                chatInput.placeholder = translations[currentLang].chat_placeholder;
+            // Update active language button
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === currentLang);
+            });
+
+            // Update document language attribute
+            document.documentElement.lang = currentLang;
+
+            // Update active crop tips if needed
+            const activeCrop = document.querySelector('.crop-btn.active')?.dataset.crop;
+            if (activeCrop) {
+                loadTips(activeCrop);
+            }
+
+            // Update chat welcome message if it's the initial state
+            const chatMessages = document.getElementById('chat-messages');
+            if (chatMessages && chatMessages.children.length === 1) {
+                chatMessages.innerHTML = `
+                    <div class="chat-message bot">
+                        ${translations[currentLang].welcome_message}
+                    </div>
+                `;
             }
         }
+
+        // Language switching with localStorage persistence
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                // Ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255,255,255,0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = (e.clientX - this.getBoundingClientRect().left) + 'px';
+                ripple.style.top = (e.clientY - this.getBoundingClientRect().top) + 'px';
+                ripple.style.width = ripple.style.height = '20px';
+
+                this.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+
+                // Language switch logic
+                currentLang = this.dataset.lang;
+                localStorage.setItem('farmConnectLang', currentLang);
+                updateLanguage();
+            });
+        });
 
         // Weather functionality
         function updateWeather() {
@@ -1116,7 +1419,7 @@
                 pepper: [
                     { title: "Semis", content: "Démarrez en pépinière et repiquez après 6-8 semaines." },
                     { title: "Exposition", content: "Placez les plants dans un endroit ensoleillé avec un sol bien drainé." },
-                    { title: "Maladies", content: "Traitez avec du soufre contre l’oïdium dès les premiers signes." }
+                    { title: "Maladies", content: "Traitez avec du soufre contre l'oïdium dès les premiers signes." }
                 ],
                 sorghum: [
                     { title: "Préparation du Sol", content: "Labourez à 20 cm et ajoutez du fumier pour enrichir le sol." },
@@ -1125,7 +1428,7 @@
                 ],
                 onion: [
                     { title: "Pépinière", content: "Préparez une pépinière et repiquez après 40-50 jours." },
-                    { title: "Arrosage", content: "Arrosez modérément, en évitant l’excès d’eau pour prévenir la pourriture." },
+                    { title: "Arrosage", content: "Arrosez modérément, en évitant l'excès d'eau pour prévenir la pourriture." },
                     { title: "Récolte", content: "Récoltez lorsque les feuilles commencent à jaunir, environ 4-5 mois." }
                 ],
                 potato: [
@@ -1146,7 +1449,7 @@
                 bissap: [
                     { title: "Semis", content: "Semez en juin-juillet avec un espacement de 50 cm." },
                     { title: "Arrosage", content: "Arrosez modérément, en maintenant un sol humide mais non détrempé." },
-                    { title: "Récolte", content: "Récoltez les calices après 3-4 mois, lorsqu’ils sont rouges." }
+                    { title: "Récolte", content: "Récoltez les calices après 3-4 mois, lorsqu'ils sont rouges." }
                 ],
                 cowpea: [
                     { title: "Inoculation", content: "Inoculez les graines avec des rhizobiums pour une meilleure croissance." },
@@ -1276,14 +1579,14 @@
         function loadTips(crop) {
             const tipsContainer = document.getElementById('tips-content');
             const loading = document.getElementById('tips-loading');
-            
+
             loading.classList.add('show');
             tipsContainer.innerHTML = '';
-            
+
             setTimeout(() => {
                 const tips = tipsData[currentLang][crop] || [];
                 let html = '';
-                
+
                 tips.forEach(tip => {
                     html += `
                         <div class="tip-item">
@@ -1295,7 +1598,7 @@
                         </div>
                     `;
                 });
-                
+
                 loading.classList.remove('show');
                 tipsContainer.innerHTML = html;
             }, 800);
@@ -1303,8 +1606,26 @@
 
         // Crop selection
         document.querySelectorAll('.crop-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', function (e) {
                 if (btn.dataset.crop) {
+                    // Ripple effect
+                    const ripple = document.createElement('div');
+                    ripple.style.position = 'absolute';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.background = 'rgba(255,255,255,0.3)';
+                    ripple.style.transform = 'scale(0)';
+                    ripple.style.animation = 'ripple 0.6s linear';
+                    ripple.style.left = (e.clientX - this.getBoundingClientRect().left) + 'px';
+                    ripple.style.top = (e.clientY - this.getBoundingClientRect().top) + 'px';
+                    ripple.style.width = ripple.style.height = '20px';
+
+                    this.appendChild(ripple);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+
+                    // Crop selection logic
                     document.querySelectorAll('.crop-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     loadTips(btn.dataset.crop);
@@ -1314,9 +1635,27 @@
 
         // Modal crop selection
         document.querySelectorAll('.crop-btn-modal').forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', function (e) {
+                // Ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255,255,255,0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = (e.clientX - this.getBoundingClientRect().left) + 'px';
+                ripple.style.top = (e.clientY - this.getBoundingClientRect().top) + 'px';
+                ripple.style.width = ripple.style.height = '20px';
+
+                this.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+
+                // Crop selection logic
                 document.querySelectorAll('.crop-btn').forEach(b => b.classList.remove('active'));
-                document.querySelector('.crop-btn[data-crop="millet"]').classList.add('active'); // Default to millet to avoid no active button
+                document.querySelector('.crop-btn[data-crop="millet"]').classList.add('active');
                 loadTips(btn.dataset.crop);
                 const modal = bootstrap.Modal.getInstance(document.getElementById('moreCropsModal'));
                 modal.hide();
@@ -1357,7 +1696,28 @@
             return responses[Math.floor(Math.random() * responses.length)];
         }
 
-        document.getElementById('chat-send').addEventListener('click', sendMessage);
+        document.getElementById('chat-send').addEventListener('click', function (e) {
+            // Ripple effect
+            const ripple = document.createElement('div');
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'rgba(255,255,255,0.3)';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            ripple.style.left = (e.clientX - this.getBoundingClientRect().left) + 'px';
+            ripple.style.top = (e.clientY - this.getBoundingClientRect().top) + 'px';
+            ripple.style.width = ripple.style.height = '20px';
+
+            this.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+
+            // Send message
+            sendMessage();
+        });
+
         document.getElementById('chat-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 sendMessage();
@@ -1367,11 +1727,11 @@
         function sendMessage() {
             const input = document.getElementById('chat-input');
             const message = input.value.trim();
-            
+
             if (message) {
                 addMessage(message, true);
                 input.value = '';
-                
+
                 setTimeout(() => {
                     addMessage(getBotResponse());
                 }, 1000 + Math.random() * 1000);
@@ -1396,16 +1756,43 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateWeather();
             loadTips('millet');
-            
+
             setInterval(updateWeather, 600000);
-            
-            document.querySelector('.btn-hero').addEventListener('click', () => {
+
+            document.querySelector('.btn-hero').addEventListener('click', function (e) {
+                // Ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255,255,255,0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = (e.clientX - this.getBoundingClientRect().left) + 'px';
+                ripple.style.top = (e.clientY - this.getBoundingClientRect().top) + 'px';
+                ripple.style.width = ripple.style.height = '20px';
+
+                this.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+
+                // Scroll to weather section
                 document.querySelector('#weather').scrollIntoView({
                     behavior: 'smooth'
                 });
             });
 
+            // Initialize language
             updateLanguage();
+
+            // Show feature cards with animation
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('show');
+                }, index * 200);
+            });
         });
 
         // Add scroll effect to navbar
@@ -1420,24 +1807,6 @@
             }
         });
 
-        // Add loading states for better UX
-        function showLoading(elementId) {
-            document.getElementById(elementId).classList.add('show');
-        }
-
-        function hideLoading(elementId) {
-            document.getElementById(elementId).classList.remove('show');
-        }
-
-        function fetchWeatherData() {
-            showLoading('weather-loading');
-            
-            setTimeout(() => {
-                updateWeather();
-                hideLoading('weather-loading');
-            }, 1500);
-        }
-
         // Add intersection observer for animations
         const observerOptions = {
             threshold: 0.1,
@@ -1447,54 +1816,15 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('show');
                 }
             });
         }, observerOptions);
 
         document.querySelectorAll('.feature-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'all 0.6s ease';
             observer.observe(card);
         });
-
-        document.querySelectorAll('.btn, .crop-btn, .crop-btn-modal, .language-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                const ripple = document.createElement('div');
-                ripple.style.position = 'absolute';
-                ripple.style.borderRadius = '50%';
-                ripple.style.background = 'rgba(255,255,255,0.3)';
-                ripple.style.transform = 'scale(0)';
-                ripple.style.animation = 'ripple 0.6s linear';
-                ripple.style.left = (e.clientX - e.target.offsetLeft) + 'px';
-                ripple.style.top = (e.clientY - e.target.offsetTop) + 'px';
-                ripple.style.width = ripple.style.height = '20px';
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
-        });
-
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
-            }
-            
-            .btn, .crop-btn, .crop-btn-modal, .language-btn {
-                position: relative;
-                overflow: hidden;
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
+
 </html>
