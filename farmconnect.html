@@ -260,6 +260,51 @@
             transform: translateX(10px);
         }
 
+        /* Modal for Additional Crops */
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+            color: white;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            border-bottom: none;
+        }
+
+        .modal-title {
+            font-weight: bold;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .additional-crops-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .crop-btn-modal {
+            background: var(--light-green);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 25px;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .crop-btn-modal:hover {
+            background: var(--primary-green);
+            transform: scale(1.05);
+        }
+
         /* Chat Section */
         .chat-container {
             height: 400px;
@@ -489,6 +534,10 @@
                 text-align: center;
                 margin-bottom: 20px;
             }
+
+            .additional-crops-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
         }
 
         /* Loading Animation */
@@ -653,6 +702,7 @@
                         <button class="crop-btn" data-crop="rice" data-translate="crop_rice">Riz</button>
                         <button class="crop-btn" data-crop="peanut" data-translate="crop_peanut">Arachide</button>
                         <button class="crop-btn" data-crop="tomato" data-translate="crop_tomato">Tomate</button>
+                        <button class="crop-btn" data-bs-toggle="modal" data-bs-target="#moreCropsModal" data-translate="more_crops">Plus +</button>
                     </div>
                     
                     <div class="feature-card tips-section">
@@ -666,6 +716,38 @@
                     </div>
                 </div>
             </section>
+
+            <!-- More Crops Modal -->
+            <div class="modal fade" id="moreCropsModal" tabindex="-1" aria-labelledby="moreCropsModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="moreCropsModalLabel" data-translate="more_crops_title">Autres Cultures</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="additional-crops-grid">
+                                <button class="crop-btn-modal" data-crop="cotton" data-translate="crop_cotton">Coton</button>
+                                <button class="crop-btn-modal" data-crop="mango" data-translate="crop_mango">Mangue</button>
+                                <button class="crop-btn-modal" data-crop="greenbean" data-translate="crop_greenbean">Haricot Vert</button>
+                                <button class="crop-btn-modal" data-crop="melon" data-translate="crop_melon">Melon</button>
+                                <button class="crop-btn-modal" data-crop="sweetcorn" data-translate="crop_sweetcorn">Maïs Doux</button>
+                                <button class="crop-btn-modal" data-crop="watermelon" data-translate="crop_watermelon">Pastèque</button>
+                                <button class="crop-btn-modal" data-crop="pepper" data-translate="crop_pepper">Piment</button>
+                                <button class="crop-btn-modal" data-crop="sorghum" data-translate="crop_sorghum">Sorgho</button>
+                                <button class="crop-btn-modal" data-crop="onion" data-translate="crop_onion">Oignon</button>
+                                <button class="crop-btn-modal" data-crop="potato" data-translate="crop_potato">Pomme de Terre</button>
+                                <button class="crop-btn-modal" data-crop="sweetpotato" data-translate="crop_sweetpotato">Patate</button>
+                                <button class="crop-btn-modal" data-crop="wheat" data-translate="crop_wheat">Blé</button>
+                                <button class="crop-btn-modal" data-crop="bissap" data-translate="crop_bissap">Bissap</button>
+                                <button class="crop-btn-modal" data-crop="cowpea" data-translate="crop_cowpea">Niébé</button>
+                                <button class="crop-btn-modal" data-crop="sugarcane" data-translate="crop_sugarcane">Sucre</button>
+                                <button class="crop-btn-modal" data-crop="cassava" data-translate="crop_cassava">Manioc</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Chat Section -->
             <section id="chat" class="section-padding">
@@ -777,7 +859,7 @@
                 </div>
             </div>
             <div class="text-center pt-3" style="border-top: 1px solid rgba(255,255,255,0.1);">
-                <p>&copy; 2024 FarmConnect Senegal. <span data-translate="footer_rights">Tous droits réservés.</span></p>
+                <p>© 2025 FarmConnect Senegal. <span data-translate="footer_rights">Tous droits réservés.</span></p>
             </div>
         </div>
     </footer>
@@ -792,9 +874,10 @@
             fr: {
                 app_title: "FarmConnect Senegal",
                 nav_home: "Accueil",
-                nav_weather: "Météo",
                 nav_tips: "Conseils",
                 nav_chat: "Assistant",
+                nav_community: "Communauté",
+                nav_investors: "Investisseurs",
                 nav_impact: "Impact",
                 hero_title: "Connectez-vous à l'Agriculture Moderne",
                 hero_subtitle: "Votre guide intelligent pour une agriculture prospère au Sénégal",
@@ -813,6 +896,24 @@
                 crop_rice: "Riz",
                 crop_peanut: "Arachide",
                 crop_tomato: "Tomate",
+                crop_cotton: "Coton",
+                crop_mango: "Mangue",
+                crop_greenbean: "Haricot Vert",
+                crop_melon: "Melon",
+                crop_sweetcorn: "Maïs Doux",
+                crop_watermelon: "Pastèque",
+                crop_pepper: "Piment",
+                crop_sorghum: "Sorgho",
+                crop_onion: "Oignon",
+                crop_potato: "Pomme de Terre",
+                crop_sweetpotato: "Patate",
+                crop_wheat: "Blé",
+                crop_bissap: "Bissap",
+                crop_cowpea: "Niébé",
+                crop_sugarcane: "Canne à Sucre",
+                crop_cassava: "Manioc",
+                more_crops: "Plus +",
+                more_crops_title: "Autres Cultures",
                 loading_tips: "Chargement des conseils...",
                 chat_title: "Assistant Agricole Intelligent",
                 chat_subtitle: "Posez vos questions en français ou en wolof",
@@ -843,9 +944,10 @@
             wo: {
                 app_title: "FarmConnect Senegal",
                 nav_home: "Kër",
-                nav_weather: "Taw",
                 nav_tips: "Waxtaan",
                 nav_chat: "Ndimbaal",
+                nav_community: "Réew mi",
+                nav_investors: "Jëfandikookat",
                 nav_impact: "Njuumte",
                 hero_title: "Jëfandikoo ak Jëmm bu Bees",
                 hero_subtitle: "Sa ndimbaalkat bu baax ci jëmm gi am njariñ ci Senegaal",
@@ -864,6 +966,24 @@
                 crop_rice: "Ceeb",
                 crop_peanut: "Gerte",
                 crop_tomato: "Xoñ",
+                crop_cotton: "Këtt",
+                crop_mango: "Màngo",
+                crop_greenbean: "Loxo bu xon",
+                crop_melon: "Melon",
+                crop_sweetcorn: "Mburu jaaw bu ñuul",
+                crop_watermelon: "Pastaay",
+                crop_pepper: "Kànjar",
+                crop_sorghum: "Saax",
+                crop_onion: "Soññ",
+                crop_potato: "Pombiteer",
+                crop_sweetpotato: "Pataas",
+                crop_wheat: "Alkaama",
+                crop_bissap: "Bisaab",
+                crop_cowpea: "Ñebbe",
+                crop_sugarcane: "Sukkar",
+                crop_cassava: "Mañok",
+                more_crops: "Ñëpp +",
+                more_crops_title: "Mburu yu Ñëpp",
                 loading_tips: "Daj waxtaan yi...",
                 chat_title: "Ndimbaalkat bu Jëmm",
                 chat_subtitle: "Laaj sa làkk ci wolof walla ci faransi",
@@ -941,146 +1061,216 @@
         const tipsData = {
             fr: {
                 millet: [
-                    {
-                        title: "Préparation du Sol",
-                        content: "Labourez le sol à une profondeur de 15-20 cm et incorporez du fumier bien décomposé."
-                    },
-                    {
-                        title: "Période de Semis",
-                        content: "Semez au début de la saison des pluies, généralement entre juin et juillet."
-                    },
-                    {
-                        title: "Espacement",
-                        content: "Respectez un espacement de 20-25 cm entre les plants pour une croissance optimale."
-                    }
+                    { title: "Préparation du Sol", content: "Labourez le sol à une profondeur de 15-20 cm et incorporez du fumier bien décomposé." },
+                    { title: "Période de Semis", content: "Semez au début de la saison des pluies, généralement entre juin et juillet." },
+                    { title: "Espacement", content: "Respectez un espacement de 20-25 cm entre les plants pour une croissance optimale." }
                 ],
                 corn: [
-                    {
-                        title: "Sélection des Variétés",
-                        content: "Choisissez des variétés adaptées au climat local comme l'EVDT 97 ou Obatanpa."
-                    },
-                    {
-                        title: "Fertilisation",
-                        content: "Appliquez de l'engrais NPK (15-15-15) à raison de 200kg/ha au moment du semis."
-                    },
-                    {
-                        title: "Irrigation",
-                        content: "Maintenez un arrosage régulier, surtout pendant la floraison et la formation des épis."
-                    }
+                    { title: "Sélection des Variétés", content: "Choisissez des variétés adaptées au climat local comme l'EVDT 97 ou Obatanpa." },
+                    { title: "Fertilisation", content: "Appliquez de l'engrais NPK (15-15-15) à raison de 200kg/ha au moment du semis." },
+                    { title: "Irrigation", content: "Maintenez un arrosage régulier, surtout pendant la floraison et la formation des épis." }
                 ],
                 rice: [
-                    {
-                        title: "Préparation de la Pépinière",
-                        content: "Préparez des pépinières dans un terrain plat avec un bon drainage."
-                    },
-                    {
-                        title: "Repiquage",
-                        content: "Repiquez les plants âgés de 20-25 jours avec 2-3 plants par poquet."
-                    },
-                    {
-                        title: "Gestion de l'Eau",
-                        content: "Maintenez une lame d'eau de 5-10 cm pendant la phase de croissance active."
-                    }
+                    { title: "Préparation de la Pépinière", content: "Préparez des pépinières dans un terrain plat avec un bon drainage." },
+                    { title: "Repiquage", content: "Repiquez les plants âgés de 20-25 jours avec 2-3 plants par poquet." },
+                    { title: "Gestion de l'Eau", content: "Maintenez une lame d'eau de 5-10 cm pendant la phase de croissance active." }
                 ],
                 peanut: [
-                    {
-                        title: "Inoculation",
-                        content: "Inoculez les graines avec des rhizobiums pour améliorer la fixation d'azote."
-                    },
-                    {
-                        title: "Buttage",
-                        content: "Effectuez le buttage 30-35 jours après le semis pour favoriser la formation des gousses."
-                    },
-                    {
-                        title: "Récolte",
-                        content: "Récoltez quand les feuilles jaunissent, généralement 90-120 jours après le semis."
-                    }
+                    { title: "Inoculation", content: "Inoculez les graines avec des rhizobiums pour améliorer la fixation d'azote." },
+                    { title: "Buttage", content: "Effectuez le buttage 30-35 jours après le semis pour favoriser la formation des gousses." },
+                    { title: "Récolte", content: "Récoltez quand les feuilles jaunissent, généralement 90-120 jours après le semis." }
                 ],
                 tomato: [
-                    {
-                        title: "Tuteurage",
-                        content: "Installez des tuteurs pour soutenir les plants et éviter que les fruits touchent le sol."
-                    },
-                    {
-                        title: "Taille",
-                        content: "Supprimez les gourmands et les feuilles basses pour améliorer l'aération."
-                    },
-                    {
-                        title: "Traitement Préventif",
-                        content: "Pulvérisez avec de la bouillie bordelaise pour prévenir les maladies fongiques."
-                    }
+                    { title: "Tuteurage", content: "Installez des tuteurs pour soutenir les plants et éviter que les fruits touchent le sol." },
+                    { title: "Taille", content: "Supprimez les gourmands et les feuilles basses pour améliorer l'aération." },
+                    { title: "Traitement Préventif", content: "Pulvérisez avec de la bouillie bordelaise pour prévenir les maladies fongiques." }
+                ],
+                cotton: [
+                    { title: "Préparation du Sol", content: "Labourez profondément et ajoutez du compost pour améliorer la fertilité." },
+                    { title: "Semis", content: "Semez entre mai et juin avec un espacement de 80 cm entre les rangs." },
+                    { title: "Protection", content: "Utilisez des insecticides biologiques pour protéger contre les bollworms." }
+                ],
+                mango: [
+                    { title: "Taille", content: "Taillez après la récolte pour favoriser la croissance de nouvelles branches." },
+                    { title: "Irrigation", content: "Arrosez régulièrement pendant les deux premières années pour un bon enracinement." },
+                    { title: "Fertilisation", content: "Appliquez un engrais riche en potassium pour améliorer la qualité des fruits." }
+                ],
+                greenbean: [
+                    { title: "Semis", content: "Semez directement en pleine terre à 5 cm de profondeur, espacement de 10 cm." },
+                    { title: "Arrosage", content: "Maintenez le sol humide mais évitez l'excès d'eau pour prévenir la pourriture." },
+                    { title: "Récolte", content: "Récoltez les gousses jeunes pour une meilleure tendreté, environ 50-60 jours." }
+                ],
+                melon: [
+                    { title: "Choix du Sol", content: "Préférez un sol sableux et bien drainé avec un pH de 6-7." },
+                    { title: "Semis", content: "Semez en mars-avril avec un espacement de 1 m entre les plants." },
+                    { title: "Protection", content: "Utilisez des filets pour protéger les fruits des oiseaux et insectes." }
+                ],
+                sweetcorn: [
+                    { title: "Fertilisation", content: "Appliquez un engrais azoté à 150 kg/ha au stade de 4-6 feuilles." },
+                    { title: "Pollenisation", content: "Plantez en blocs pour favoriser la pollinisation croisée." },
+                    { title: "Récolte", content: "Récoltez lorsque les grains sont tendres, environ 70-80 jours après le semis." }
+                ],
+                watermelon: [
+                    { title: "Sol", content: "Utilisez un sol riche en matière organique avec un bon drainage." },
+                    { title: "Semis", content: "Semez en avril-mai avec 1,5 m entre les plants pour un bon développement." },
+                    { title: "Arrosage", content: "Arrosez abondamment pendant la formation des fruits, puis réduisez." }
+                ],
+                pepper: [
+                    { title: "Semis", content: "Démarrez en pépinière et repiquez après 6-8 semaines." },
+                    { title: "Exposition", content: "Placez les plants dans un endroit ensoleillé avec un sol bien drainé." },
+                    { title: "Maladies", content: "Traitez avec du soufre contre l’oïdium dès les premiers signes." }
+                ],
+                sorghum: [
+                    { title: "Préparation du Sol", content: "Labourez à 20 cm et ajoutez du fumier pour enrichir le sol." },
+                    { title: "Semis", content: "Semez au début des pluies avec 30 cm entre les rangs." },
+                    { title: "Entretien", content: "Désherbez régulièrement pour éviter la concurrence avec les mauvaises herbes." }
+                ],
+                onion: [
+                    { title: "Pépinière", content: "Préparez une pépinière et repiquez après 40-50 jours." },
+                    { title: "Arrosage", content: "Arrosez modérément, en évitant l’excès d’eau pour prévenir la pourriture." },
+                    { title: "Récolte", content: "Récoltez lorsque les feuilles commencent à jaunir, environ 4-5 mois." }
+                ],
+                potato: [
+                    { title: "Plantation", content: "Plantez des tubercules sains à 10 cm de profondeur, espacement de 30 cm." },
+                    { title: "Buttage", content: "Buttez les plants à 20 cm de haut pour protéger les tubercules." },
+                    { title: "Protection", content: "Traitez contre le mildiou avec un fongicide adapté." }
+                ],
+                sweetpotato: [
+                    { title: "Plantation", content: "Utilisez des boutures de 30 cm et plantez en billons." },
+                    { title: "Sol", content: "Préférez un sol sableux avec un pH de 5.5-6.5." },
+                    { title: "Récolte", content: "Récoltez après 4-5 mois, lorsque les feuilles jaunissent." }
+                ],
+                wheat: [
+                    { title: "Semis", content: "Semez en novembre-décembre avec 120 kg/ha de semences." },
+                    { title: "Fertilisation", content: "Appliquez un engrais NPK à 100 kg/ha au semis." },
+                    { title: "Irrigation", content: "Irriguez régulièrement, surtout pendant la montaison." }
+                ],
+                bissap: [
+                    { title: "Semis", content: "Semez en juin-juillet avec un espacement de 50 cm." },
+                    { title: "Arrosage", content: "Arrosez modérément, en maintenant un sol humide mais non détrempé." },
+                    { title: "Récolte", content: "Récoltez les calices après 3-4 mois, lorsqu’ils sont rouges." }
+                ],
+                cowpea: [
+                    { title: "Inoculation", content: "Inoculez les graines avec des rhizobiums pour une meilleure croissance." },
+                    { title: "Semis", content: "Semez en saison des pluies avec 20 cm entre les plants." },
+                    { title: "Entretien", content: "Désherbez tôt pour éviter la concurrence avec les mauvaises herbes." }
+                ],
+                sugarcane: [
+                    { title: "Plantation", content: "Plantez des boutures de 40 cm en sillons profonds." },
+                    { title: "Fertilisation", content: "Appliquez un engrais riche en azote après 1 mois." },
+                    { title: "Irrigation", content: "Irriguez abondamment toutes les 1-2 semaines." }
+                ],
+                cassava: [
+                    { title: "Plantation", content: "Plantez des boutures de 20-30 cm en saison des pluies." },
+                    { title: "Sol", content: "Utilisez un sol meuble et bien drainé pour un bon développement." },
+                    { title: "Récolte", content: "Récoltez après 9-12 mois, lorsque les racines sont matures." }
                 ]
             },
             wo: {
                 millet: [
-                    {
-                        title: "Soxlal Suuf si",
-                        content: "Weccal suuf si ci 15-20 cm te dundu tay bu baax bu reer."
-                    },
-                    {
-                        title: "Jamono bu Weccale",
-                        content: "Weccal bi taw yi tamit, dina am ci juni ak juillet."
-                    },
-                    {
-                        title: "Beneen ak Beneen",
-                        content: "Yor 20-25 cm ci biir mburu yo nekk ngir baax bu guddi."
-                    }
+                    { title: "Soxlal Suuf si", content: "Weccal suuf si ci 15-20 cm te dundu tay bu baax bu reer." },
+                    { title: "Jamono bu Weccale", content: "Weccal bi taw yi tamit, dina am ci juni ak juillet." },
+                    { title: "Beneen ak Beneen", content: "Yor 20-25 cm ci biir mburu yo nekk ngir baax bu guddi." }
                 ],
                 corn: [
-                    {
-                        title: "Tann Mburu yi",
-                        content: "Tann mburu yu am solo ci taw bi am, njël EVDT 97 walla Obatanpa."
-                    },
-                    {
-                        title: "Dundu Alkaati",
-                        content: "Jël alkaati NPK (15-15-15) 200kg ci hektaar bu nekk bi nga weccal."
-                    },
-                    {
-                        title: "Ndox",
-                        content: "Sori ndox rek rek, rawatina bi ngeen noppante ak bi ñër yi di soxla."
-                    }
+                    { title: "Tann Mburu yi", content: "Tann mburu yu am solo ci taw bi am, njël EVDT 97 walla Obatanpa." },
+                    { title: "Dundu Alkaati", content: "Jël alkaati NPK (15-15-15) 200kg ci hektaar bu nekk bi nga weccal." },
+                    { title: "Ndox", content: "Sori ndox rek rek, rawatina bi ngeen noppante ak bi ñër yi di soxla." }
                 ],
                 rice: [
-                    {
-                        title: "Soxlal Kër bu Soxlale",
-                        content: "Def kër bu soxlale ci bunt bu pëkk bu am drainage bu baax."
-                    },
-                    {
-                        title: "Toppale",
-                        content: "Topp mburu yi am 20-25 fan ak 2-3 mburu ci benn poquet."
-                    },
-                    {
-                        title: "Yobalal Ndox",
-                        content: "Am ndox 5-10 cm ci jamano bi mburu yi di yokk."
-                    }
+                    { title: "Soxlal Kër bu Soxlale", content: "Def kër bu soxlale ci bunt bu pëkk bu am drainage bu baax." },
+                    { title: "Toppale", content: "Topp mburu yi am 20-25 fan ak 2-3 mburu ci benn poquet." },
+                    { title: "Yobalal Ndox", content: "Am ndox 5-10 cm ci jamono bi mburu yi di yokk." }
                 ],
                 peanut: [
-                    {
-                        title: "Inoculation",
-                        content: "Jël rhizobium ci mburu yi ngir baax bu yàgg asot."
-                    },
-                    {
-                        title: "Buttage",
-                        content: "Def buttage 30-35 fan ci ginnaaw weccale ngir gousses yi soxla."
-                    },
-                    {
-                        title: "Mbootaay",
-                        content: "Mbootaay bi ngeen gis ne gaal yi rawul, 90-120 fan ci ginnaaw weccale."
-                    }
+                    { title: "Inoculation", content: "Jël rhizobium ci mburu yi ngir baax bu yàgg asot." },
+                    { title: "Buttage", content: "Def buttage 30-35 fan ci ginnaaw weccale ngir gousses yi soxla." },
+                    { title: "Mbootaay", content: "Mbootaay bi ngeen gis ne gaal yi rawul, 90-120 fan ci ginnaaw weccale." }
                 ],
                 tomato: [
-                    {
-                        title: "Tuteurage",
-                        content: "Yor tuteur yo ngir mburu yi am yëf te ñër yi bañ suuf si."
-                    },
-                    {
-                        title: "Res",
-                        content: "Res gourmand yi ak gaal yi nekk ginnaaw ngir paal mi dugg."
-                    },
-                    {
-                        title: "Laay Ngir Yëp",
-                        content: "Sànn ak bouillie bordelaise ngir tëral yàkkar yu baax."
-                    }
+                    { title: "Tuteurage", content: "Yor tuteur yo ngir mburu yi am yëf te ñër yi bañ suuf si." },
+                    { title: "Res", content: "Res gourmand yi ak gaal yi nekk ginnaaw ngir paal mi dugg." },
+                    { title: "Laay Ngir Yëp", content: "Sànn ak bouillie bordelaise ngir tëral yàkkar yu baax." }
+                ],
+                cotton: [
+                    { title: "Soxlal Suuf", content: "Weccal bu yaatu te dundu compost ngir yokk solo." },
+                    { title: "Weccale", content: "Weccal ci may ak juni ak 80 cm ci diggante rëy yo." },
+                    { title: "Rëy", content: "Jëfandikoo insecticide yu biyolojik ngir rëy bollworms." }
+                ],
+                mango: [
+                    { title: "Res", content: "Res ci ginnaaw mbootaay ngir yëpp ci yoon yu bees." },
+                    { title: "Ndox", content: "Ndox rek rek ci ñaari at yu jëkk ngir baax bu rëy." },
+                    { title: "Dundu", content: "Jël alkaati bu baxx ci potassium ngir baax ñër." }
+                ],
+                greenbean: [
+                    { title: "Weccale", content: "Weccal bu jëkk ci suuf si ci 5 cm ak 10 cm ci diggante." },
+                    { title: "Ndox", content: "Def suuf si bu niroo ndox, wàññi ndox bu baxx ngir tëral yàkkar." },
+                    { title: "Mbootaay", content: "Mbootaay gousses yu tàngg ci 50-60 fan ngir ñu gën a ñuul." }
+                ],
+                melon: [
+                    { title: "Tann Suuf", content: "Tann suuf bu xawa te am drainage bu baax ak pH 6-7." },
+                    { title: "Weccale", content: "Weccal ci marte ak awril ak 1 m ci diggante mburu yo." },
+                    { title: "Rëy", content: "Jëfandikoo filets ngir rëy ñër yi ci jën ak yàkkar." }
+                ],
+                sweetcorn: [
+                    { title: "Dundu", content: "Jël alkaati bu baxx ci azot 150 kg/ha ci ñeent walla juróom gaal." },
+                    { title: "Pollenisation", content: "Weccal ci bloques ngir pollenisation croisée bu baax." },
+                    { title: "Mbootaay", content: "Mbootaay bi ñër yi tàngg, ci 70-80 fan ci ginnaaw weccale." }
+                ],
+                watermelon: [
+                    { title: "Suuf", content: "Jëfandikoo suuf bu baxx ci matière organique ak drainage bu baax." },
+                    { title: "Weccale", content: "Weccal ci awril-may ak 1,5 m ci diggante mburu yo." },
+                    { title: "Ndox", content: "Ndox bu baxx ci jamono bu ñër, te wàññi ci ginnaaw." }
+                ],
+                pepper: [
+                    { title: "Weccale", content: "Tàmbali ci pépinière te topp ci ginnaaw 6-8 weer." },
+                    { title: "Jëf", content: "Def mburu yo ci bérab bu jàkk te am drainage bu baax." },
+                    { title: "Yàkkar", content: "Jël soufre ngir oïdium dés que ngeen gis yëppu." }
+                ],
+                sorghum: [
+                    { title: "Soxlal Suuf", content: "Weccal ci 20 cm te dundu tay ngir yokk solo." },
+                    { title: "Weccale", content: "Weccal ci tàmbali taw yi ak 30 cm ci diggante rëy yo." },
+                    { title: "Rëy", content: "Wecc ci yoon ngir wàññi yàkkar yu ñuul." }
+                ],
+                onion: [
+                    { title: "Pépinière", content: "Def pépinière te topp ci ginnaaw 40-50 fan." },
+                    { title: "Ndox", content: "Ndox bu ndaw, wàññi ndox bu baxx ngir tëral yàkkar." },
+                    { title: "Mbootaay", content: "Mbootaay bi gaal yi tàmbali raw, ci 4-5 weer." }
+                ],
+                potato: [
+                    { title: "Weccale", content: "Weccal tubercules yu baax ci 10 cm bu yaatu, 30 cm ci diggante." },
+                    { title: "Buttage", content: "Butt mburu yo ci 20 cm ngir rëy tubercules yo." },
+                    { title: "Rëy", content: "Jël fongicide bu am solo ngir mildiou." }
+                ],
+                sweetpotato: [
+                    { title: "Weccale", content: "Jëfandikoo boutures 30 cm te weccal ci billons." },
+                    { title: "Suuf", content: "Tann suuf bu xawa ak pH 5.5-6.5." },
+                    { title: "Mbootaay", content: "Mbootaay ci ginnaaw 4-5 weer, bi gaal yi raw." }
+                ],
+                wheat: [
+                    { title: "Weccale", content: "Weccal ci noowàmbar-désàmbar ak 120 kg/ha ci mburu." },
+                    { title: "Dundu", content: "Jël alkaati NPK 100 kg/ha ci weccale." },
+                    { title: "Ndox", content: "Ndox rek rek, rawatina ci jamono bu montaison." }
+                ],
+                bissap: [
+                    { title: "Weccale", content: "Weccal ci juni-juillet ak 50 cm ci diggante." },
+                    { title: "Ndox", content: "Ndox bu ndaw, def suuf si bu niroo ndox, bañ détrempé." },
+                    { title: "Mbootaay", content: "Mbootaay calices yo ci 3-4 weer, bi ñu xon." }
+                ],
+                cowpea: [
+                    { title: "Inoculation", content: "Jël rhizobium ci mburu yi ngir baax bu gudd." },
+                    { title: "Weccale", content: "Weccal ci jamono bu taw ak 20 cm ci diggante mburu yo." },
+                    { title: "Rëy", content: "Wecc ci tàmbali ngir wàññi yàkkar yu ñuul." }
+                ],
+                sugarcane: [
+                    { title: "Weccale", content: "Weccal boutures 40 cm ci sillon yu yaatu." },
+                    { title: "Dundu", content: "Jël alkaati bu baxx ci azot ci ginnaaw benn weer." },
+                    { title: "Ndox", content: "Ndox bu baxx ci 1-2 weer yépp." }
+                ],
+                cassava: [
+                    { title: "Weccale", content: "Weccal boutures 20-30 cm ci jamono bu taw." },
+                    { title: "Suuf", content: "Jëfandikoo suuf bu tàngg te am drainage bu baax." },
+                    { title: "Mbootaay", content: "Mbootaay ci 9-12 weer, bi rëdd yi am yëf." }
                 ]
             }
         };
@@ -1093,7 +1283,7 @@
             tipsContainer.innerHTML = '';
             
             setTimeout(() => {
-                const tips = tipsData[currentLang][crop];
+                const tips = tipsData[currentLang][crop] || [];
                 let html = '';
                 
                 tips.forEach(tip => {
@@ -1116,9 +1306,22 @@
         // Crop selection
         document.querySelectorAll('.crop-btn').forEach(btn => {
             btn.addEventListener('click', () => {
+                if (btn.dataset.crop) {
+                    document.querySelectorAll('.crop-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    loadTips(btn.dataset.crop);
+                }
+            });
+        });
+
+        // Modal crop selection
+        document.querySelectorAll('.crop-btn-modal').forEach(btn => {
+            btn.addEventListener('click', () => {
                 document.querySelectorAll('.crop-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+                document.querySelector('.crop-btn[data-crop="millet"]').classList.add('active'); // Default to millet to avoid no active button
                 loadTips(btn.dataset.crop);
+                const modal = bootstrap.Modal.getInstance(document.getElementById('moreCropsModal'));
+                modal.hide();
             });
         });
 
@@ -1134,7 +1337,7 @@
             ],
             wo: [
                 "Làkk bu baax laa ! Ngir baax sa njuumte, xam sa suuf te weccal alkaati yu am solo.",
-                "Ci jamano bu reer, jëfandikoo arrosage goutte à goutte ak paillage ngir sukkandiku ndaw.",
+                "Ci jamono bu reer, jëfandikoo arrosage goutte à goutte ak paillage ngir sukkandiku ndaw.",
                 "Soppalel mburu yi baax na ! Weccal légumineuses ak céréales ngir suuf si dugg baax.",
                 "Ngir xeex ak yàkkar yu baax, jëfandikoo neem walla yor piège à phéromones.",
                 "Taw bi wax ne taw dinañu ko am ca 2 fan. Léegi laa baax ngir soxlal weccale !",
@@ -1171,7 +1374,6 @@
                 addMessage(message, true);
                 input.value = '';
                 
-                // Simulate bot response delay
                 setTimeout(() => {
                     addMessage(getBotResponse());
                 }, 1000 + Math.random() * 1000);
@@ -1197,17 +1399,14 @@
             updateWeather();
             loadTips('millet');
             
-            // Update weather every 10 minutes
             setInterval(updateWeather, 600000);
             
-            // Add some interactivity to hero button
             document.querySelector('.btn-hero').addEventListener('click', () => {
                 document.querySelector('#weather').scrollIntoView({
                     behavior: 'smooth'
                 });
             });
 
-            // Initialize language
             updateLanguage();
         });
 
@@ -1232,7 +1431,6 @@
             document.getElementById(elementId).classList.remove('show');
         }
 
-        // Simulate API calls for weather data
         function fetchWeatherData() {
             showLoading('weather-loading');
             
@@ -1257,7 +1455,6 @@
             });
         }, observerOptions);
 
-        // Observe all feature cards
         document.querySelectorAll('.feature-card').forEach(card => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(30px)';
@@ -1265,8 +1462,7 @@
             observer.observe(card);
         });
 
-        // Add click effects to buttons
-        document.querySelectorAll('.btn, .crop-btn, .language-btn').forEach(btn => {
+        document.querySelectorAll('.btn, .crop-btn, .crop-btn-modal, .language-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 const ripple = document.createElement('div');
                 ripple.style.position = 'absolute';
@@ -1286,7 +1482,6 @@
             });
         });
 
-        // Add ripple animation CSS
         const style = document.createElement('style');
         style.textContent = `
             @keyframes ripple {
@@ -1296,7 +1491,7 @@
                 }
             }
             
-            .btn, .crop-btn, .language-btn {
+            .btn, .crop-btn, .crop-btn-modal, .language-btn {
                 position: relative;
                 overflow: hidden;
             }
