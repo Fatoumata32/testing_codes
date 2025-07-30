@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier des Ateliers</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .calendar-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(45, 80, 22, 0.15);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .calendar-header {
+            background: linear-gradient(135deg, #2d5016, #4a7c59);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calendar-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .calendar-header h3 {
+            font-size: 20px;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            background: rgba(250, 251, 252, 0.8);
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #2d5016, #4a7c59);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 16px rgba(45, 80, 22, 0.2);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 12px 24px rgba(45, 80, 22, 0.3);
+        }
+
+        .nav-btn:active {
+            transform: translateY(-1px) scale(1.05);
+        }
+
+        .month-display {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2d5016;
+            text-align: center;
+            padding: 10px 20px;
+            background: rgba(45, 80, 22, 0.05);
+            border-radius: 25px;
+            border: 2px solid rgba(45, 80, 22, 0.1);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            padding: 20px;
+            background: rgba(245, 247, 250, 0.5);
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, #2d5016, #4a7c59);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 12px;
+            border-radius: 50%;
+            margin: 2px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px auto;
+        }
+
+        .calendar-day {
+            height: 60px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 50%;
+            margin: 2px;
+        }
+
+        .calendar-day:hover {
+            transform: scale(1.1);
+            background: rgba(74, 124, 89, 0.1);
+        }
+
+        .calendar-day.other-month {
+            opacity: 0.3;
+        }
+
+        .calendar-day.today {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
+            border: 3px solid #4a7c59;
+        }
+
+        .calendar-day.has-workshop {
+            background: linear-gradient(135deg, #2d5016, #4a7c59);
+            color: white;
+            box-shadow: 0 8px 16px rgba(45, 80, 22, 0.3);
+        }
+
+        .calendar-day.has-workshop:hover {
+            transform: scale(1.15);
+            box-shadow: 0 12px 24px rgba(45, 80, 22, 0.4);
+        }
+
+        .day-number {
+            font-weight: 700;
+            font-size: 14px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .workshop-pulse {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(74, 124, 89, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .upcoming-section {
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(250, 251, 252, 0.9), rgba(248, 249, 250, 0.9));
+        }
+
+        .upcoming-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .upcoming-title {
+            color: #2d5016;
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-btn {
+            background: linear-gradient(135deg, #2d5016, #4a7c59);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(45, 80, 22, 0.2);
+        }
+
+        .toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(45, 80, 22, 0.3);
+        }
+
+        .workshops-list {
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .workshops-list.collapsed {
+            max-height: 90px;
+        }
+
+        .workshops-list.expanded {
+            max-height: 500px;
+        }
+
+        .upcoming-title i {
+            background: linear-gradient(135deg, #2d5016, #4a7c59);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .workshop-item {
+            background: white;
+            border-radius: 25px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workshop-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            background: linear-gradient(135deg, #2d5016, #4a7c59);
+            border-radius: 0 25px 25px 0;
+        }
+
+        .workshop-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(45, 80, 22, 0.2);
+            border-color: rgba(74, 124, 89, 0.3);
+        }
+
+        .workshop-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 8px;
+        }
+
+        .workshop-date-circle {
+            background: linear-gradient(135deg, #2d5016, #4a7c59);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 11px;
+            box-shadow: 0 6px 12px rgba(45, 80, 22, 0.3);
+        }
+
+        .workshop-name {
+            font-weight: 700;
+            font-size: 16px;
+            color: #2d5016;
+            flex: 1;
+        }
+
+        .workshop-location {
+            color: #666;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 65px;
+        }
+
+        .workshop-location i {
+            background: rgba(74, 124, 89, 0.1);
+            color: #4a7c59;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: linear-gradient(135deg, #2d5016, #4a7c59);
+            color: white;
+            padding: 10px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            z-index: 1000;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 8px 16px rgba(45, 80, 22, 0.3);
+        }
+
+        .tooltip:after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #2d5016;
+        }
+
+        .calendar-day:hover .tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        @media (max-width: 640px) {
+            .calendar-container {
+                margin: 10px;
+                border-radius: 25px;
+            }
+            
+            .calendar-grid {
+                padding: 15px;
+            }
+            
+            .calendar-day {
+                height: 50px;
+            }
+            
+            .day-header {
+                width: 35px;
+                height: 35px;
+                font-size: 10px;
+            }
+            
+            .workshop-item {
+                padding: 15px;
+            }
+            
+            .workshop-date-circle {
+                width: 40px;
+                height: 40px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <h3><i class="fas fa-seedling"></i> Calendrier des Ateliers</h3>
+        </div>
+
+        <div class="calendar-nav">
+            <button class="nav-btn" onclick="previousMonth()" id="prevBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="month-display" id="monthDisplay"></div>
+            <button class="nav-btn" onclick="nextMonth()" id="nextBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div class="calendar-grid" id="calendarGrid">
+            <!-- Calendar will be generated here -->
+        </div>
+
+        <div class="upcoming-section">
+            <div class="upcoming-header">
+                <div class="upcoming-title">
+                    <i class="fas fa-clock"></i>Prochains Ateliers
+                </div>
+                <button class="toggle-btn" onclick="toggleWorkshops()" id="toggleBtn">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+            <div class="workshops-list collapsed" id="workshopsList">
+                <!-- Workshop list will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const workshops = [
+            {
+                date: new Date(2025, 6, 15), // July 15
+                title: "Agriculture Biologique",
+                location: "Dakar"
+            },
+            {
+                date: new Date(2025, 6, 22), // July 22
+                title: "Techniques d'Irrigation",
+                location: "Thiès"
+            },
+            {
+                date: new Date(2025, 7, 5), // August 5
+                title: "Conservation des Sols",
+                location: "Kaolack"
+            },
+            {
+                date: new Date(2025, 7, 12), // August 12
+                title: "Marketing Agricole",
+                location: "Saint-Louis"
+            },
+            {
+                date: new Date(2025, 7, 25), // August 25
+                title: "Gestion de l'Eau",
+                location: "Tambacounda"
+            }
+        ];
+
+        let currentDate = new Date();
+        const monthNames = [
+            "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+            "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+        ];
+        const dayNames = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
+
+        function generateCalendar(year, month) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - firstDay.getDay());
+
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+
+            // Add day headers
+            dayNames.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'day-header';
+                dayHeader.textContent = day;
+                calendarGrid.appendChild(dayHeader);
+            });
+
+            // Generate calendar days
+            const endDate = new Date(startDate);
+            endDate.setDate(endDate.getDate() + 41); // 6 weeks
+
+            for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                
+                const isCurrentMonth = date.getMonth() === month;
+                const isToday = date.toDateString() === new Date().toDateString();
+                
+                if (!isCurrentMonth) {
+                    dayElement.classList.add('other-month');
+                }
+                if (isToday) {
+                    dayElement.classList.add('today');
+                }
+
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = date.getDate();
+                dayElement.appendChild(dayNumber);
+
+                // Check for workshops on this date
+                const dayWorkshops = workshops.filter(workshop => 
+                    workshop.date.toDateString() === date.toDateString()
+                );
+
+                if (dayWorkshops.length > 0) {
+                    dayElement.classList.add('has-workshop');
+                    
+                    // Add pulsing effect
+                    const pulse = document.createElement('div');
+                    pulse.className = 'workshop-pulse';
+                    dayElement.appendChild(pulse);
+
+                    // Add tooltip
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    tooltip.innerHTML = dayWorkshops.map(w => `${w.title}<br><small>${w.location}</small>`).join('<br><br>');
+                    dayElement.appendChild(tooltip);
+                }
+
+                calendarGrid.appendChild(dayElement);
+            }
+
+            // Update month display
+            document.getElementById('monthDisplay').textContent = 
+                `${monthNames[month]} ${year}`;
+        }
+
+        function generateWorkshopsList() {
+            const workshopsList = document.getElementById('workshopsList');
+            const now = new Date();
+            const upcomingWorkshops = workshops
+                .filter(workshop => workshop.date >= now)
+                .sort((a, b) => a.date - b.date);
+
+            workshopsList.innerHTML = '';
+
+            if (upcomingWorkshops.length === 0) {
+                workshopsList.innerHTML = '<div style="color: #666; font-size: 14px; text-align: center; padding: 20px; border-radius: 20px; background: rgba(255,255,255,0.5);">Aucun atelier prévu</div>';
+                return;
+            }
+
+            upcomingWorkshops.forEach(workshop => {
+                const workshopItem = document.createElement('div');
+                workshopItem.className = 'workshop-item';
+                
+                const day = workshop.date.getDate();
+                const month = workshop.date.toLocaleDateString('fr-FR', { month: 'short' });
+                
+                workshopItem.innerHTML = `
+                    <div class="workshop-header">
+                        <div class="workshop-date-circle">
+                            <div>${day}</div>
+                            <div style="font-size: 9px;">${month}</div>
+                        </div>
+                        <div class="workshop-name">${workshop.title}</div>
+                    </div>
+                    <div class="workshop-location">
+                        <i class="fas fa-map-marker-alt"></i>${workshop.location}
+                    </div>
+                `;
+                workshopsList.appendChild(workshopItem);
+            });
+        }
+
+        function toggleWorkshops() {
+            const workshopsList = document.getElementById('workshopsList');
+            const toggleBtn = document.getElementById('toggleBtn');
+            const icon = toggleBtn.querySelector('i');
+            
+            if (workshopsList.classList.contains('collapsed')) {
+                workshopsList.classList.remove('collapsed');
+                workshopsList.classList.add('expanded');
+                icon.className = 'fas fa-chevron-up';
+            } else {
+                workshopsList.classList.remove('expanded');
+                workshopsList.classList.add('collapsed');
+                icon.className = 'fas fa-chevron-down';
+            }
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        }
+
+        // Initialize
+        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        generateWorkshopsList();
+    </script>
+</body>
+</html>

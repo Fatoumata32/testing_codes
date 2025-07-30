@@ -7,12 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
             --primary-green: #2d5016;
             --light-green: #4a7c59;
@@ -23,6 +17,12 @@
             --pure-white: #ffffff;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -31,7 +31,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            width: 100%;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -83,21 +83,16 @@
         }
 
         .investor-link {
-            background: linear-gradient(135deg, var(--accent-yellow) 0%, #f7dc6f 100%) !important;
-            color: var(--primary-green) !important;
+            color: #ffffff;
             font-weight: bold;
-            animation: pulse 2s infinite;
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(244,208,63,0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(244,208,63,0); }
-            100% { box-shadow: 0 0 0 0 rgba(244,208,63,0); }
-        }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, rgba(45,80,22,0.8) 0%, rgba(74,124,89,0.8) 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="farm" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="50" cy="50" r="2" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23farm)"/></svg>');
+            background: linear-gradient(135deg, rgba(45,80,22,0.8) 0%, rgba(74,124,89,0.8) 100%), url('img/hero_background.jpg');
+            background-size: cover;
+            background-position: center;
             color: var(--pure-white);
             padding: 5rem 0;
             text-align: center;
@@ -139,7 +134,7 @@
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
-            Presley: --accent-yellow;
+            color: var(--pure-white);
         }
 
         .cta-button {
@@ -152,6 +147,8 @@
             font-weight: bold;
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(244,208,63,0.3);
+            text-decoration: none;
+            display: inline-block;
         }
 
         .cta-button:hover {
@@ -206,7 +203,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             text-align: center;
             transition: all 0.3s ease;
-            border: none;
             position: relative;
             overflow: hidden;
         }
@@ -316,6 +312,384 @@
             color: var(--accent-yellow);
         }
 
+        /* Workshops Calendar */
+        .workshops-calendar {
+            background: var(--pure-white);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+
+        .calendar-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(45, 80, 22, 0.15);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .calendar-header {
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: var(--pure-white);
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calendar-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .calendar-header h3 {
+            font-size: 20px;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            background: rgba(250, 251, 252, 0.8);
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: var(--pure-white);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 16px rgba(45, 80, 22, 0.2);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 12px 24px rgba(45, 80, 22, 0.3);
+        }
+
+        .nav-btn:active {
+            transform: translateY(-1px) scale(1.05);
+        }
+
+        .month-display {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-green);
+            text-align: center;
+            padding: 10px 20px;
+            background: rgba(45, 80, 22, 0.05);
+            border-radius: 25px;
+            border: 2px solid rgba(45, 80, 22, 0.1);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            padding: 20px;
+            background: rgba(245, 247, 250, 0.5);
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: var(--pure-white);
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 12px;
+            border-radius: 50%;
+            margin: 2px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px auto;
+        }
+
+        .calendar-day {
+            height: 40px;
+            width: 40px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 50%;
+            margin: 2px;
+        }
+
+        .calendar-day:hover {
+            transform: scale(1.1);
+            background: rgba(74, 124, 89, 0.1);
+        }
+
+        .calendar-day.other-month {
+            opacity: 0.3;
+        }
+
+        .calendar-day.today {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
+            border: 3px solid var(--light-green);
+        }
+
+        .calendar-day.has-workshop {
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: var(--pure-white);
+            box-shadow: 0 8px 16px rgba(45, 80, 22, 0.3);
+        }
+
+        .calendar-day.has-workshop:hover {
+            transform: scale(1.15);
+            box-shadow: 0 12px 24px rgba(45, 80, 22, 0.4);
+        }
+
+        .day-number {
+            font-weight: 700;
+            font-size: 14px;
+            position: relative;
+            z-index: 2;
+        }
+
+        
+
+        .upcoming-section {
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(250, 251, 252, 0.9), rgba(248, 249, 250, 0.9));
+        }
+
+        .upcoming-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .upcoming-title {
+            color: var(--primary-green);
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-btn {
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: var(--pure-white);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(45, 80, 22, 0.2);
+        }
+
+        .toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(45, 80, 22, 0.3);
+        }
+
+        .workshops-list {
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .workshops-list.collapsed {
+            max-height: 90px;
+        }
+
+        .workshops-list.expanded {
+            max-height: 500px;
+        }
+
+        .upcoming-title i {
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: var(--pure-white);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .workshop-item {
+            background: var(--pure-white);
+            border-radius: 25px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workshop-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            border-radius: 0 25px 25px 0;
+        }
+
+        .workshop-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(45, 80, 22, 0.2);
+            border-color: rgba(74, 124, 89, 0.3);
+        }
+
+        .workshop-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 8px;
+        }
+
+        .workshop-date-circle {
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: var(--pure-white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 11px;
+            box-shadow: 0 6px 12px rgba(45, 80, 22, 0.3);
+        }
+
+        .workshop-name {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--primary-green);
+            flex: 1;
+        }
+
+        .workshop-location {
+            color: #666;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 65px;
+        }
+
+        .workshop-location i {
+            background: rgba(74, 124, 89, 0.1);
+            color: var(--light-green);
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: var(--pure-white);
+            padding: 10px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            z-index: 1000;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 8px 16px rgba(45, 80, 22, 0.3);
+        }
+
+        .tooltip:after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: var(--primary-green);
+        }
+
+        .calendar-day:hover .tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        @media (max-width: 640px) {
+            .calendar-container {
+                margin: 10px;
+                border-radius: 25px;
+            }
+            
+            .calendar-grid {
+                padding: 15px;
+            }
+            
+            .calendar-day {
+                height: 50px;
+            }
+            
+            .day-header {
+                width: 35px;
+                height: 35px;
+                font-size: 10px;
+            }
+            
+            .workshop-item {
+                padding: 15px;
+            }
+            
+            .workshop-date-circle {
+                width: 40px;
+                height: 40px;
+                font-size: 10px;
+            }
+        }
+
         /* Call to Action Section */
         .cta-section {
             background: linear-gradient(135deg, var(--accent-yellow) 0%, #f7dc6f 100%);
@@ -411,26 +785,27 @@
             text-align: center;
         }
 
-        /* Image Placeholders */
-        .image-placeholder {
-            background: linear-gradient(45deg, #e8f5e8, #f0f8f0);
-            border: 2px dashed var(--light-green);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--light-green);
-            font-style: italic;
-            text-align: center;
-            padding: 2rem;
-            border-radius: 10px;
-            margin: 2rem 0;
-            transition: all 0.3s ease;
+        /* Image Styling */
+        .section-image {
+            width: 100%;
+            height: 800px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            display: block;
+            margin: 2rem auto;
+            transition: transform 0.3s ease;
         }
 
-        .image-placeholder:hover {
-            border-color: var(--accent-yellow);
-            background: linear-gradient(45deg, #fff5e1, #fefbf0);
-            color: var(--primary-green);
+        .section-image:hover {
+            transform: scale(1.02);
+        }
+
+        .section-img {
+            width: 800px;
+            height: 400px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            display: block;
+            margin: 2rem auto;
+            transition: transform 0.3s ease;
         }
 
         /* Responsive Design */
@@ -459,7 +834,7 @@
         }
 
         /* Ripple Animation for Buttons */
-        .btn-primary, .btn-secondary, .cta-button, .nav-links a {
+        .btn-primary, .btn-secondary, .cta-button, .nav-links a, .nav-btn {
             position: relative;
             overflow: hidden;
         }
@@ -479,10 +854,10 @@
             <div class="nav-container">
                 <a href="#" class="logo"><i class="fas fa-seedling"></i> FarmConnect Senegal</a>
                 <ul class="nav-links">
-                    <li><a href="farmconnect.html">Accueil</a></li>
-                    <li><a href="#community" class="active">Communauté</a></li>
-                    <li><a href="investors.html">Investisseurs</a></li>
-                    <li><a href="tools.html">Outils</a></li>
+                    <li><a href="farmconnect.html" aria-label="Page d'accueil">Accueil</a></li>
+                    <li><a href="community.html" class="active" aria-label="Communauté">Communauté</a></li>
+                    <li><a href="investors.html" class="investor-link" aria-label="Investisseurs">Investisseurs</a></li>
+                    <li><a href="tools.html" aria-label="Outils">Outils</a></li>
                 </ul>
             </div>
         </div>
@@ -493,41 +868,39 @@
         <div class="container">
             <div class="hero-content">
                 <h1>Cultivons Ensemble l'Avenir</h1>
-                <p>Rejoignez la communauté des agriculteurs sénégalais connectés avec FarmConnect. Partagez vos connaissances, apprenez des experts et développez votre exploitation agricole grâce à des outils modernes.</p>
-                <a href="#community" class="cta-button">Rejoindre Notre Communauté</a>
+                <p>Rejoignez FarmConnect Senegal, la plateforme qui unit les agriculteurs sénégalais pour partager des connaissances, accéder à des outils modernes et booster la productivité agricole. Ensemble, transformons l'agriculture pour un avenir durable et prospère.</p>
+                <a href="#community" class="cta-button" aria-label="Rejoindre la communauté">Rejoindre Notre Communauté</a>
             </div>
         </div>
     </section>
 
     <!-- Hero Image -->
     <div class="container">
-        <div class="image-placeholder" style="height: 400px; margin: 3rem 0;">
-            <div>
-                📸 Image Héroïque: Agriculteurs sénégalais travaillant ensemble<br>
-                Photo inspirante montrant la collaboration et l'innovation dans l'agriculture sénégalaise
-            </div>
-        </div>
+        <img src="img/medium-shot-women-working-together.jpg" alt="Agriculteurs sénégalais travaillant ensemble dans les champs" class="img-fluid" width="100%" height="500px">
     </div>
 
     <!-- Community Section -->
     <section id="community" class="section">
         <div class="container">
             <h2 class="section-title">Notre Communauté Unie</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: var(--text-dark);">
+                FarmConnect Senegal est plus qu'une plateforme : c'est une communauté vibrante où les agriculteurs partagent leurs expériences, apprennent des experts et collaborent pour une agriculture sénégalaise plus forte.
+            </p>
             <div class="features-grid">
                 <div class="feature-card">
                     <i class="fas fa-handshake feature-icon"></i>
                     <h3>Réseau de Contacts</h3>
-                    <p>Connectez-vous avec des milliers d'agriculteurs sénégalais. Échangez des expériences, formez des partenariats et développez votre réseau professionnel grâce à FarmConnect.</p>
+                    <p>Connectez-vous avec des milliers d'agriculteurs à travers le Sénégal. Échangez des idées, formez des partenariats stratégiques et développez un réseau professionnel solide pour faire prospérer votre exploitation.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-book feature-icon"></i>
                     <h3>Techniques de Conservation</h3>
-                    <p>Accédez à des guides pratiques, vidéos et innovations pour améliorer le stockage et la conservation des récoltes, réduisant ainsi les pertes post-récolte.</p>
+                    <p>Découvrez des guides pratiques, des vidéos éducatives et des innovations pour optimiser le stockage et la conservation des récoltes, réduisant ainsi les pertes post-récolte et augmentant vos bénéfices.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-chart-line feature-icon"></i>
                     <h3>Prix du Marché en Temps Réel</h3>
-                    <p>Consultez les prix actuels des marchés sénégalais. FarmConnect vous informe des opportunités de vente pour maximiser vos revenus.</p>
+                    <p>Restez informé des prix actuels des produits agricoles sur les marchés sénégalais. FarmConnect vous aide à identifier les meilleures opportunités de vente pour maximiser vos revenus.</p>
                 </div>
             </div>
         </div>
@@ -537,30 +910,24 @@
     <section id="services" class="section">
         <div class="container">
             <h2 class="section-title">Services Communautaires</h2>
-          <img src="img/agriculture in senegal.jpg"
-     alt="Interface de la plateforme FarmConnect"
-     style="width: 100%; max-width: 600px; height: auto;
-            border: 4px solid #4CAF50;
-            border-radius: 20px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-            display: block;
-            margin: 20px auto;">
-
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: var(--text-dark);">
+                Nos services sont conçus pour répondre aux besoins des agriculteurs sénégalais, en leur offrant des outils et des ressources pour travailler plus efficacement et rester connectés.
+            </p>
             <div class="community-grid">
                 <div class="community-card">
                     <i class="fas fa-comments icon"></i>
                     <h3>Forum d'Échange</h3>
-                    <p>Un espace pour poser des questions, partager des réussites et apprendre des autres agriculteurs sénégalais. Discussions et conseils d'experts.</p>
+                    <p>Participez à des discussions dynamiques, posez vos questions et partagez vos réussites avec d'autres agriculteurs. Bénéficiez des conseils d'experts pour résoudre vos défis agricoles.</p>
                 </div>
                 <div class="community-card">
                     <i class="fas fa-mobile-alt icon"></i>
                     <h3>Application Mobile</h3>
-                    <p>Accédez à FarmConnect depuis votre téléphone : prix, communauté, alertes météo et plus encore, directement depuis vos champs.</p>
+                    <p>Accédez à FarmConnect où que vous soyez : consultez les prix, connectez-vous à la communauté, recevez des alertes météo et explorez nos ressources directement depuis votre smartphone.</p>
                 </div>
                 <div class="community-card">
                     <i class="fas fa-bell icon"></i>
                     <h3>Alertes Personnalisées</h3>
-                    <p>Notifications sur les variations de prix, opportunités de vente, alertes météo et formations dans votre région au Sénégal.</p>
+                    <p>Recevez des notifications sur les variations de prix, les opportunités de marché, les alertes météo et les formations locales pour rester toujours un pas en avant.</p>
                 </div>
             </div>
         </div>
@@ -570,38 +937,56 @@
     <section id="workshops" class="section">
         <div class="container">
             <h2 class="section-title">Ateliers et Formations</h2>
-            <div class="image-placeholder" style="height: 350px;">
-                <div>
-                    📸 Image: Atelier de formation agricole au Sénégal<br>
-                    Agriculteurs participant à une session pratique et interactive
-                </div>
-            </div>
+            <img src="img/women workshop.jpg" alt="Agriculteurs participant à un atelier de formation au Sénégal" class="section-img">
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: var(--text-dark);">
+                Participez à nos ateliers pratiques pour acquérir des compétences modernes et durables. Nos formations sont conçues pour aider les agriculteurs sénégalais à innover et à prospérer.
+            </p>
             <div class="workshop-highlights">
                 <div class="workshop-card">
                     <i class="fas fa-seedling icon"></i>
                     <h3>Agriculture Durable</h3>
-                    <p>Apprenez des techniques respectueuses de l'environnement pour augmenter les rendements tout en préservant les sols sénégalais.</p>
+                    <p>Apprenez des techniques écologiques pour augmenter vos rendements tout en préservant les sols fertiles du Sénégal, pour une agriculture durable à long terme.</p>
                 </div>
                 <div class="workshop-card">
                     <i class="fas fa-laptop icon"></i>
                     <h3>Technologies Modernes</h3>
-                    <p>Maîtrisez les outils numériques et l'agriculture de précision pour moderniser votre exploitation au Sénégal.</p>
+                    <p>Maîtrisez les outils numériques et les techniques d'agriculture de précision pour optimiser vos ressources et moderniser votre exploitation agricole.</p>
                 </div>
                 <div class="workshop-card">
                     <i class="fas fa-briefcase icon"></i>
                     <h3>Gestion d'Exploitation</h3>
-                    <p>Développez vos compétences en gestion financière et marketing agricole pour optimiser vos profits.</p>
+                    <p>Développez vos compétences en gestion financière, marketing et planification pour maximiser vos profits et assurer la pérennité de votre ferme.</p>
                 </div>
             </div>
-            <div style="background: var(--pure-white); padding: 2rem; border-radius: 15px; margin: 2rem 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                <h3 style="color: var(--primary-green); font-size: 1.8rem; text-align: center; margin-bottom: 1.5rem;">Prochains Ateliers</h3>
-                <div class="image-placeholder" style="height: 250px;">
-                    <div>
-                        📸 Calendrier des Ateliers:<br>
-                        • 15 Mars - Agriculture Biologique (Dakar)<br>
-                        • 22 Mars - Techniques d'Irrigation (Thiès)<br>
-                        • 30 Mars - Marketing Agricole (Saint-Louis)<br>
-                        • 5 Avril - Conservation des Sols (Kaolack)
+            <div class="workshops-calendar">
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <h3><i class="fas fa-seedling"></i> Calendrier des Ateliers</h3>
+                    </div>
+                    <div class="calendar-nav">
+                        <button class="nav-btn" onclick="previousMonth()" id="prevBtn" aria-label="Mois précédent">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="month-display" id="monthDisplay"></div>
+                        <button class="nav-btn" onclick="nextMonth()" id="nextBtn" aria-label="Mois suivant">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- Calendar will be generated here -->
+                    </div>
+                    <div class="upcoming-section">
+                        <div class="upcoming-header">
+                            <div class="upcoming-title">
+                                <i class="fas fa-clock"></i>Prochains Ateliers
+                            </div>
+                            <button class="toggle-btn" onclick="toggleWorkshops()" id="toggleBtn" aria-label="Afficher/Masquer les ateliers">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="workshops-list collapsed" id="workshopsList">
+                            <!-- Workshop list will be generated here -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -612,16 +997,10 @@
     <section class="cta-section">
         <div class="container">
             <h2>Prêt à Transformer Votre Agriculture ?</h2>
-            <p>Rejoignez les agriculteurs sénégalais qui améliorent leurs rendements et revenus grâce à FarmConnect et ses outils innovants.</p>
-            <div class="image-placeholder" style="height: 200px; background: rgba(255,255,255,0.9); color: var(--primary-green);">
-                <div>
-                    📸 Image: Témoignages d'agriculteurs sénégalais<br>
-                    Photos et citations d'agriculteurs ayant réussi avec FarmConnect
-                </div>
-            </div>
+            <p>Rejoignez des milliers d'agriculteurs sénégalais qui utilisent FarmConnect pour améliorer leurs rendements, accéder à des marchés rentables et apprendre des techniques modernes. Inscrivez-vous dès aujourd'hui et faites partie de la révolution agricole au Sénégal.</p>
             <div class="cta-buttons">
-                <a href="#" class="btn-primary">S'inscrire Maintenant</a>
-                <a href="#" class="btn-secondary">Découvrir les Témoignages</a>
+                <a href="#" class="btn-primary" aria-label="S'inscrire à FarmConnect">S'inscrire Maintenant</a>
+                <a href="#" class="btn-secondary" aria-label="Découvrir les témoignages">Découvrir les Témoignages</a>
             </div>
         </div>
     </section>
@@ -632,35 +1011,35 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>FarmConnect Senegal</h3>
-                    <p>La plateforme qui connecte les agriculteurs sénégalais pour une agriculture durable et prospère.</p>
+                    <p>FarmConnect Senegal est dédié à l'autonomisation des agriculteurs sénégalais grâce à une plateforme communautaire qui favorise l'échange, l'apprentissage et l'innovation pour une agriculture durable et prospère.</p>
                     <div style="margin-top: 1rem;">
                         <strong>5000+ agriculteurs connectés</strong><br>
                         <strong>100+ ateliers organisés</strong><br>
-                        <strong>Sénégal uniquement</strong>
+                        <strong>Présent dans tout le Sénégal</strong>
                     </div>
                 </div>
                 <div class="footer-section">
                     <h3>Services</h3>
-                    <a href="#">Réseau d'Agriculteurs</a>
-                    <a href="#">Conservation des Récoltes</a>
-                    <a href="#">Prix du Marché</a>
-                    <a href="#">Forum d'Échange</a>
-                    <a href="#">Application Mobile</a>
+                    <a href="#community" aria-label="Réseau d'agriculteurs">Réseau d'Agriculteurs</a>
+                    <a href="#services" aria-label="Conservation des récoltes">Conservation des Récoltes</a>
+                    <a href="#services" aria-label="Prix du marché">Prix du Marché</a>
+                    <a href="#services" aria-label="Forum d'échange">Forum d'Échange</a>
+                    <a href="#services" aria-label="Application mobile">Application Mobile</a>
                 </div>
                 <div class="footer-section">
                     <h3>Formations</h3>
-                    <a href="#">Agriculture Durable</a>
-                    <a href="#">Technologies Modernes</a>
-                    <a href="#">Gestion d'Exploitation</a>
-                    <a href="#">Calendrier des Formations</a>
+                    <a href="#workshops" aria-label="Agriculture durable">Agriculture Durable</a>
+                    <a href="#workshops" aria-label="Technologies modernes">Technologies Modernes</a>
+                    <a href="#workshops" aria-label="Gestion d'exploitation">Gestion d'Exploitation</a>
+                    <a href="#workshops" aria-label="Calendrier des formations">Calendrier des Formations</a>
                 </div>
                 <div class="footer-section">
                     <h3>Contact</h3>
-                    <p>Email: info@farmconnect.sn</p>
-                    <p>Téléphone: +221 77 123 4567</p>
-                    <p>Support: support@farmconnect.sn</p>
+                    <p>Email: <a href="mailto:info@farmconnect.sn">info@farmconnect.sn</a></p>
+                    <p>Téléphone: <a href="tel:+221771234567">+221 77 123 4567</a></p>
+                    <p>Support: <a href="mailto:support@farmconnect.sn">support@farmconnect.sn</a></p>
                     <p>Adresse: Dakar, Sénégal</p>
-                    <a href="#" onclick="openInvestorPage()" style="color: var(--accent-yellow); font-weight: bold; margin-top: 1rem;">→ Page Investisseurs</a>
+                    <a href="#investors" onclick="openInvestorPage()" style="color: var(--accent-yellow); font-weight: bold; margin-top: 1rem;" aria-label="Page des investisseurs">→ Page Investisseurs</a>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -671,10 +1050,181 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        const workshops = [
+            {
+                date: new Date(2025, 6, 15), // July 15
+                title: "Agriculture Biologique",
+                location: "Dakar"
+            },
+            {
+                date: new Date(2025, 6, 22), // July 22
+                title: "Techniques d'Irrigation",
+                location: "Thiès"
+            },
+            {
+                date: new Date(2025, 7, 5), // August 5
+                title: "Conservation des Sols",
+                location: "Kaolack"
+            },
+            {
+                date: new Date(2025, 7, 12), // August 12
+                title: "Marketing Agricole",
+                location: "Saint-Louis"
+            },
+            {
+                date: new Date(2025, 7, 25), // August 25
+                title: "Gestion de l'Eau",
+                location: "Tambacounda"
+            }
+        ];
+
+        let currentDate = new Date();
+        const monthNames = [
+            "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+            "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+        ];
+        const dayNames = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
+
+        function generateCalendar(year, month) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - firstDay.getDay());
+
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+
+            // Add day headers
+            dayNames.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'day-header';
+                dayHeader.textContent = day;
+                calendarGrid.appendChild(dayHeader);
+            });
+
+            // Generate calendar days
+            const endDate = new Date(startDate);
+            endDate.setDate(endDate.getDate() + 41); // 6 weeks
+
+            for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                
+                const isCurrentMonth = date.getMonth() === month;
+                const isToday = date.toDateString() === new Date().toDateString();
+                
+                if (!isCurrentMonth) {
+                    dayElement.classList.add('other-month');
+                }
+                if (isToday) {
+                    dayElement.classList.add('today');
+                }
+
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = date.getDate();
+                dayElement.appendChild(dayNumber);
+
+                // Check for workshops on this date
+                const dayWorkshops = workshops.filter(workshop => 
+                    workshop.date.toDateString() === date.toDateString()
+                );
+
+                if (dayWorkshops.length > 0) {
+                    dayElement.classList.add('has-workshop');
+                    
+                    // Add pulsing effect
+                    const pulse = document.createElement('div');
+                    pulse.className = 'workshop-pulse';
+                    dayElement.appendChild(pulse);
+
+                    // Add tooltip
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    tooltip.innerHTML = dayWorkshops.map(w => `${w.title}<br><small>${w.location}</small>`).join('<br><br>');
+                    dayElement.appendChild(tooltip);
+                }
+
+                calendarGrid.appendChild(dayElement);
+            }
+
+            // Update month display
+            document.getElementById('monthDisplay').textContent = 
+                `${monthNames[month]} ${year}`;
+        }
+
+        function generateWorkshopsList() {
+            const workshopsList = document.getElementById('workshopsList');
+            const now = new Date();
+            const upcomingWorkshops = workshops
+                .filter(workshop => workshop.date >= now)
+                .sort((a, b) => a.date - b.date);
+
+            workshopsList.innerHTML = '';
+
+            if (upcomingWorkshops.length === 0) {
+                workshopsList.innerHTML = '<div style="color: #666; font-size: 14px; text-align: center; padding: 20px; border-radius: 20px; background: rgba(255,255,255,0.5);">Aucun atelier prévu</div>';
+                return;
+            }
+
+            upcomingWorkshops.forEach(workshop => {
+                const workshopItem = document.createElement('div');
+                workshopItem.className = 'workshop-item';
+                
+                const day = workshop.date.getDate();
+                const month = workshop.date.toLocaleDateString('fr-FR', { month: 'short' });
+                
+                workshopItem.innerHTML = `
+                    <div class="workshop-header">
+                        <div class="workshop-date-circle">
+                            <div>${day}</div>
+                            <div style="font-size: 9px;">${month}</div>
+                        </div>
+                        <div class="workshop-name">${workshop.title}</div>
+                    </div>
+                    <div class="workshop-location">
+                        <i class="fas fa-map-marker-alt"></i>${workshop.location}
+                    </div>
+                `;
+                workshopsList.appendChild(workshopItem);
+            });
+        }
+
+        function toggleWorkshops() {
+            const workshopsList = document.getElementById('workshopsList');
+            const toggleBtn = document.getElementById('toggleBtn');
+            const icon = toggleBtn.querySelector('i');
+            
+            if (workshopsList.classList.contains('collapsed')) {
+                workshopsList.classList.remove('collapsed');
+                workshopsList.classList.add('expanded');
+                icon.className = 'fas fa-chevron-up';
+            } else {
+                workshopsList.classList.remove('expanded');
+                workshopsList.classList.add('collapsed');
+                icon.className = 'fas fa-chevron-down';
+            }
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        }
+
         function openInvestorPage() {
             alert("Redirection vers la page Investisseurs...\n\nCette fonctionnalité ouvrira la page dédiée aux investisseurs avec toutes les informations financières et de contact.");
         }
 
+        // Initialize
+        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        generateWorkshopsList();
+
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -687,6 +1237,7 @@
             });
         });
 
+        // Sticky nav effect
         window.addEventListener('scroll', function() {
             const nav = document.querySelector('nav');
             if (window.scrollY > 100) {
@@ -698,6 +1249,7 @@
             }
         });
 
+        // Intersection Observer for animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -712,14 +1264,15 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.feature-card, .community-card, .workshop-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'all 0.6s ease';
-            observer.observe(card);
+        document.querySelectorAll('.feature-card, .community-card, .workshop-card, .section-image').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'all 0.6s ease';
+            observer.observe(element);
         });
 
-        document.querySelectorAll('.btn-primary, .btn-secondary, .cta-button, .nav-links a').forEach(btn => {
+        // Ripple effect for buttons
+        document.querySelectorAll('.btn-primary, .btn-secondary, .cta-button, .nav-links a, .nav-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 const ripple = document.createElement('div');
                 ripple.style.position = 'absolute';
@@ -727,8 +1280,8 @@
                 ripple.style.background = 'rgba(255,255,255,0.3)';
                 ripple.style.transform = 'scale(0)';
                 ripple.style.animation = 'ripple 0.6s linear';
-                ripple.style.left = (e.clientX - e.target.offsetLeft) + 'px';
-                ripple.style.top = (e.clientY - e.target.offsetTop) + 'px';
+                ripple.style.left = `${e.clientX - this.getBoundingClientRect().left}px`;
+                ripple.style.top = `${e.clientY - this.getBoundingClientRect().top}px`;
                 ripple.style.width = ripple.style.height = '20px';
                 this.appendChild(ripple);
                 setTimeout(() => {
