@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Profil" %} - FarmConnect{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+    }
+    
+    .profile-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        margin-top: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border-top: 4px solid #4a7c59;
+    }
+    
+    .profile-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #f0f8f0;
+    }
+    
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: white;
+        font-size: 3rem;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: #2d5016;
+        margin-bottom: 8px;
+        display: block;
+    }
+    
+    .form-control {
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 12px 15px;
+        transition: all 0.3s ease;
+        background: #f8f9fa;
+    }
+    
+    .form-control:focus {
+        border-color: #4a7c59;
+        box-shadow: 0 0 0 0.2rem rgba(74, 124, 89, 0.25);
+        background: white;
+    }
+    
+    .btn-save {
+        background: linear-gradient(135deg, #2d5016 0%, #4a7c59 100%);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(45, 80, 22, 0.3);
+    }
+    
+    .btn-save:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(45, 80, 22, 0.4);
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="profile-card">
+                <!-- Profile Header -->
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        {% if user.profile_picture %}
+                            <img src="{{ user.profile_picture.url }}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                        {% else %}
+                            <i class="fas fa-user"></i>
+                        {% endif %}
+                    </div>
+                    <h2>{{ user.get_full_name|default:user.username }}</h2>
+                    <p class="text-muted">{{ user.get_role_display }} - {{ user.region|default:"Région non définie" }}</p>
+                </div>
+
+                <!-- Messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <!-- Profile Form -->
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">{% trans "Prénom" %} *</label>
+                                <input type="text" class="form-control" name="first_name" 
+                                       value="{{ user.first_name }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">{% trans "Nom" %} *</label>
+                                <input type="text" class="form-control" name="last_name" 
+                                       value="{{ user.last_name }}" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{% trans "Email" %}</label>
+                        <input type="email" class="form-control" name="email" 
+                               value="{{ user.email }}">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">{% trans "Région" %}</label>
+                                <select class="form-control" name="region">
+                                    <option value="">{% trans "Sélectionnez votre région" %}</option>
+                                    <option value="dakar" {% if user.region == 'dakar' %}selected{% endif %}>Dakar</option>
+                                    <option value="thies" {% if user.region == 'thies' %}selected{% endif %}>Thiès</option>
+                                    <option value="saint-louis" {% if user.region == 'saint-louis' %}selected{% endif %}>Saint-Louis</option>
+                                    <option value="diourbel" {% if user.region == 'diourbel' %}selected{% endif %}>Diourbel</option>
+                                    <option value="louga" {% if user.region == 'louga' %}selected{% endif %}>Louga</option>
+                                    <option value="fatick" {% if user.region == 'fatick' %}selected{% endif %}>Fatick</option>
+                                    <option value="kaolack" {% if user.region == 'kaolack' %}selected{% endif %}>Kaolack</option>
+                                    <option value="kaffrine" {% if user.region == 'kaffrine' %}selected{% endif %}>Kaffrine</option>
+                                    <option value="tambacounda" {% if user.region == 'tambacounda' %}selected{% endif %}>Tambacounda</option>
+                                    <option value="kedougou" {% if user.region == 'kedougou' %}selected{% endif %}>Kédougou</option>
+                                    <option value="kolda" {% if user.region == 'kolda' %}selected{% endif %}>Kolda</option>
+                                    <option value="sedhiou" {% if user.region == 'sedhiou' %}selected{% endif %}>Sédhiou</option>
+                                    <option value="ziguinchor" {% if user.region == 'ziguinchor' %}selected{% endif %}>Ziguinchor</option>
+                                    <option value="matam" {% if user.region == 'matam' %}selected{% endif %}>Matam</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">{% trans "Village/Commune" %}</label>
+                                <input type="text" class="form-control" name="village" 
+                                       value="{{ user.village }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">{% trans "Langue préférée" %}</label>
+                                <select class="form-control" name="preferred_language">
+                                    <option value="fr" {% if user.preferred_language == 'fr' %}selected{% endif %}>{% trans "Français" %}</option>
+                                    <option value="wo" {% if user.preferred_language == 'wo' %}selected{% endif %}>{% trans "Wolof" %}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">{% trans "Rôle" %}</label>
+                                <select class="form-control" name="role">
+                                    <option value="farmer" {% if user.role == 'farmer' %}selected{% endif %}>{% trans "Agriculteur" %}</option>
+                                    <option value="agent" {% if user.role == 'agent' %}selected{% endif %}>{% trans "Agent de Vulgarisation" %}</option>
+                                    <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>{% trans "Administrateur" %}</option>
+                                </select>
+                                <small class="text-muted">{% trans "Contactez l'admin pour changer de rôle" %}</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{% trans "Numéro de téléphone" %}</label>
+                        <input type="tel" class="form-control" value="{{ user.phone_number }}" 
+                               readonly style="background: #f8f9fa;">
+                        <small class="text-muted">{% trans "Le numéro de téléphone ne peut pas être modifié" %}</small>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">{% trans "Taille de l'exploitation" %}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="farm_size" 
+                                           value="{{ user.farm_size|default:'' }}" 
+                                           step="0.01" min="0" placeholder="0.00">
+                                    <span class="input-group-text">hectares</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">{% trans "Date de naissance" %}</label>
+                                <input type="date" class="form-control" name="birth_date" 
+                                       value="{{ user.birth_date|date:'Y-m-d'|default:'' }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{% trans "Photo de profil" %}</label>
+                        <input type="file" class="form-control" name="profile_picture" 
+                               accept="image/*">
+                        <small class="text-muted">{% trans "Formats acceptés: JPG, PNG. Taille max: 5MB" %}</small>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn-save">
+                            <i class="fas fa-save me-2"></i>
+                            {% trans "Sauvegarder les modifications" %}
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Account Info -->
+                <div class="mt-4 pt-4" style="border-top: 2px solid #f0f8f0;">
+                    <h5 class="text-muted">{% trans "Informations du compte" %}</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>{% trans "Rôle:" %}</strong> {{ user.get_role_display }}</p>
+                            <p><strong>{% trans "Membre depuis:" %}</strong> {{ user.created_at|date:"d M Y" }}</p>
+                            <p><strong>{% trans "Vérifié:" %}</strong> 
+                                {% if user.is_verified %}
+                                    <span class="badge bg-success">{% trans "Vérifié" %}</span>
+                                {% else %}
+                                    <span class="badge bg-warning">{% trans "Non vérifié" %}</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>{% trans "Dernière connexion:" %}</strong> {{ user.last_login|date:"d M Y H:i"|default:"Jamais" }}</p>
+                            <p><strong>{% trans "Statut:" %}</strong> 
+                                {% if user.is_active %}
+                                    <span class="badge bg-success">{% trans "Actif" %}</span>
+                                {% else %}
+                                    <span class="badge bg-danger">{% trans "Inactif" %}</span>
+                                {% endif %}
+                            </p>
+                            {% if user.farm_size %}
+                                <p><strong>{% trans "Exploitation:" %}</strong> {{ user.farm_size }} hectares</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

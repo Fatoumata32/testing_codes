@@ -1,0 +1,650 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Connexion" %} - FarmConnect</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Left Side - Welcome Section */
+        .welcome-section {
+            flex: 1;
+            background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%);
+            color: white;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="leaves" patternUnits="userSpaceOnUse" width="20" height="20"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23leaves)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            line-height: 1.2;
+        }
+
+        .welcome-notice {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #f4d03f;
+            backdrop-filter: blur(10px);
+        }
+
+        .notice-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #f4d03f;
+        }
+
+        .notice-text {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        /* Right Side - Login Section */
+        .login-section {
+            flex: 1;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2d5016;
+        }
+
+        .logo-text .connect {
+            color: #f4d03f;
+        }
+
+        .logo-subtitle {
+            font-size: 0.8rem;
+            color: #666;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .tab-navigation {
+            display: flex;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            border-radius: 50px;
+            padding: 5px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .tab-btn.active {
+            background: #2d5016;
+            color: white;
+            box-shadow: 0 2px 10px rgba(45, 80, 22, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #4a7c59;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: #999;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background: #2d5016;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-login:hover {
+            background: #4a7c59;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(45, 80, 22, 0.3);
+        }
+
+        .btn-login:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .forgot-password a {
+            color: #f4d03f;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        /* Registration Tab Content */
+        .registration-content {
+            display: none;
+        }
+
+        .registration-content.active {
+            display: block;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .register-link a {
+            color: #2d5016;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .register-link a:hover {
+            color: #4a7c59;
+        }
+
+        /* Messages */
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: none;
+        }
+
+        .alert-danger, .alert-error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+        }
+
+        .alert-info {
+            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+            color: #0c5460;
+        }
+
+        .alert-warning {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            color: #856404;
+        }
+
+        /* Form errors */
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin: 5px 0;
+        }
+
+        .errorlist li {
+            color: #721c24;
+            font-size: 0.9rem;
+            background: #f8d7da;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        .form-control.error {
+            border-color: #dc3545;
+            background: #fff5f5;
+        }
+
+        /* Loading state */
+        .loading {
+            position: relative;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid #fff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .welcome-section {
+                flex: none;
+                height: 40vh;
+                padding: 30px;
+            }
+
+            .welcome-title {
+                font-size: 1.8rem;
+            }
+
+            .login-section {
+                flex: none;
+                height: 60vh;
+                padding: 30px;
+                overflow-y: auto;
+            }
+
+            .login-card {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-card {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Side - Welcome Section -->
+        <div class="welcome-section">
+            <div class="welcome-content">
+                <h1 class="welcome-title">{% trans "Bienvenue sur FarmConnect" %}</h1>
+                
+                <div class="welcome-notice">
+                    <div class="notice-title">{% trans "AVERTISSEMENT" %}</div>
+                    <div class="notice-text">
+                        {% trans "L'accès à ce système est strictement réservé aux utilisateurs dûment autorisés. Toute tentative d'accès non autorisée ou de maintien frauduleux dans le système pourra entraîner des poursuites judiciaires. Les utilisateurs autorisés reconnaissent que toutes leurs actions sont susceptibles d'être enregistrées, surveillées, conservées et auditées." %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Login Section -->
+        <div class="login-section">
+            <div class="login-card">
+                <!-- Logo -->
+                <div class="logo">
+                    <div class="logo-text">
+                        Farm<span class="connect">Connect</span>
+                    </div>
+                    <div class="logo-subtitle">AGRICULTURE</div>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="tab-navigation">
+                    <button class="tab-btn active" id="loginTab" onclick="switchTab('login')">
+                        {% trans "Connexion" %}
+                    </button>
+                    <button class="tab-btn" id="registerTab" onclick="switchTab('register')">
+                        {% trans "Inscription" %}
+                    </button>
+                </div>
+
+                <!-- Messages -->
+                <div class="messages">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginContent" class="login-content">
+                    <form method="POST" id="loginForm" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <input type="text" 
+                                   class="form-control {% if form.username.errors %}error{% endif %}" 
+                                   name="username" 
+                                   value="{{ form.username.value|default:'' }}"
+                                   placeholder="{% trans 'Numéro de téléphone ou email' %}" 
+                                   required
+                                   autocomplete="username">
+                            {% if form.username.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.username.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <div class="password-wrapper">
+                                <input type="password" 
+                                       class="form-control {% if form.password.errors %}error{% endif %}" 
+                                       name="password" 
+                                       id="password" 
+                                       placeholder="{% trans 'Mot de passe' %}" 
+                                       required
+                                       autocomplete="current-password">
+                                <button type="button" class="password-toggle" onclick="togglePassword()">
+                                    <i class="fas fa-eye" id="passwordIcon"></i>
+                                </button>
+                            </div>
+                            {% if form.password.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.password.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+
+                        <!-- Remember me -->
+                        <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" name="remember_me" id="remember_me">
+                            <label for="remember_me" style="font-size: 0.9rem; color: #666;">
+                                {% trans "Se souvenir de moi" %}
+                            </label>
+                        </div>
+
+                        <!-- Redirect field -->
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+                        {% endif %}
+
+                        <button type="submit" class="btn-login" id="loginBtn">
+                            {% trans "CONNEXION" %}
+                        </button>
+                    </form>
+
+                    <div class="forgot-password">
+                        <a href="{% url 'password_reset' %}">{% trans "Mot de passe oublié ?" %}</a>
+                    </div>
+                </div>
+
+                <!-- Registration Content -->
+                <div id="registerContent" class="registration-content">
+                    <div class="register-link">
+                        <p>{% trans "Nouveau sur FarmConnect ?" %}</p>
+                        <a href="{% url 'farmconnect_app:register' %}">{% trans "Créer un compte gratuitement" %}</a>
+                    </div>
+                    
+                    <div style="margin-top: 20px; text-align: center; color: #666; font-size: 0.9rem;">
+                        <p>{% trans "Rejoignez des milliers d'agriculteurs sénégalais" %}</p>
+                        <p>✓ {% trans "Conseils agricoles personnalisés" %}</p>
+                        <p>✓ {% trans "Prévisions météo en temps réel" %}</p>
+                        <p>✓ {% trans "Communauté d'entraide" %}</p>
+                        <p>✓ {% trans "Assistant IA multilingue" %}</p>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="footer">
+                    Copyright © 2025 FarmConnect
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FontAwesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <script>
+        // Tab switching
+        function switchTab(tab) {
+            const loginTab = document.getElementById('loginTab');
+            const registerTab = document.getElementById('registerTab');
+            const loginContent = document.getElementById('loginContent');
+            const registerContent = document.getElementById('registerContent');
+
+            if (tab === 'login') {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginContent.style.display = 'block';
+                registerContent.classList.remove('active');
+            } else {
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+                loginContent.style.display = 'none';
+                registerContent.classList.add('active');
+            }
+        }
+
+        // Password toggle
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const passwordIcon = document.getElementById('passwordIcon');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                passwordIcon.classList.remove('fa-eye');
+                passwordIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                passwordIcon.classList.remove('fa-eye-slash');
+                passwordIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Form submission with loading state
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            const submitBtn = document.getElementById('loginBtn');
+            const username = this.username.value.trim();
+            const password = this.password.value;
+
+            // Basic validation
+            if (!username || !password) {
+                e.preventDefault();
+                alert('{% trans "Veuillez remplir tous les champs requis." %}');
+                return;
+            }
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+            submitBtn.textContent = '{% trans "CONNEXION EN COURS..." %}';
+
+            // Allow form to submit normally to Django
+        });
+
+        // Auto-focus on first input
+        document.addEventListener('DOMContentLoaded', function() {
+            const usernameField = document.querySelector('input[name="username"]');
+            if (usernameField) {
+                usernameField.focus();
+            }
+
+            // Remove loading state if page reloads with errors
+            const submitBtn = document.getElementById('loginBtn');
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('loading');
+            submitBtn.textContent = '{% trans "CONNEXION" %}';
+        });
+
+        // Enter key navigation
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const activeElement = document.activeElement;
+                if (activeElement.name === 'username') {
+                    document.getElementById('password').focus();
+                    e.preventDefault();
+                }
+            }
+        });
+
+        // Phone number formatting for username field
+        document.querySelector('input[name="username"]').addEventListener('input', function(e) {
+            let value = e.target.value;
+            
+            // If it looks like a phone number (starts with digits), format it
+            if (/^\d/.test(value)) {
+                value = value.replace(/\D/g, ''); // Remove non-digits
+                if (value.length > 0 && !value.startsWith('221')) {
+                    // Auto-add country code if not present
+                    if (value.length <= 9) {
+                        // Format as Senegalese number
+                        value = value.replace(/(\d{2})(\d{3})(\d{2})(\d{2})/, '$1 $2 $3 $4');
+                    }
+                }
+            }
+            
+            e.target.value = value;
+        });
+
+        // Hide messages after 5 seconds
+        setTimeout(function() {
+            const messages = document.querySelectorAll('.alert');
+            messages.forEach(function(message) {
+                message.style.opacity = '0';
+                setTimeout(function() {
+                    message.remove();
+                }, 300);
+            });
+        }, 5000);
+    </script>
+</body>
+</html>
