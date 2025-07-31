@@ -54,3 +54,14 @@ INFO 2025-07-31 08:03:29,683 views 17452 23468 Authentication successful for use
 INFO 2025-07-31 08:03:29,683 views 17452 23468 User is active, logging in
 INFO 2025-07-31 08:03:29,689 views 17452 23468 Remember me disabled - session expires on browser close
 INFO 2025-07-31 08:03:29,689 views 17452 23468 Redirecting authenticated user to: /fr/dashboard/
+INFO 2025-07-31 09:26:39,207 views 29492 22648 Login view called with method: GET
+INFO 2025-07-31 09:26:39,241 views 29492 22648 Rendering login template
+INFO 2025-07-31 09:26:52,051 views 29492 22648 Login view called with method: POST
+INFO 2025-07-31 09:26:52,051 views 29492 22648 Processing POST request for login
+INFO 2025-07-31 09:26:52,052 views 29492 22648 Username: malick, Password length: 9
+INFO 2025-07-31 09:26:52,052 views 29492 22648 Next URL: /fr/dashboard/
+INFO 2025-07-31 09:26:52,052 views 29492 22648 Attempting authentication for user: malick
+INFO 2025-07-31 09:26:56,807 views 29492 22648 Authentication successful for user: malick
+INFO 2025-07-31 09:26:56,807 views 29492 22648 User is active, logging in
+INFO 2025-07-31 09:26:56,835 views 29492 22648 Remember me disabled - session expires on browser close
+INFO 2025-07-31 09:26:56,836 views 29492 22648 Redirecting authenticated user to: /fr/dashboard/
