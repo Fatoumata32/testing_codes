@@ -101,10 +101,15 @@ urlpatterns = [
     # Pages utilisateur
     path('dashboard/', views.dashboard, name='dashboard'),
     path('profile/', views.profile, name='profile'),
+
+    path('crops/', include('crops.urls')),
     
     # Pages statiques
     path('about/', views.about, name='about'),
     path('investors/', views.investors, name='investors'),
+    
+    path('community/', views.community, name='community'),
+    path('about/', views.about, name='about'),
     
     # Réinitialisation de mot de passe - SIMPLES
     path('password-reset/', views.password_reset_request, name='password_reset'),

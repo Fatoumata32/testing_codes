@@ -1,3 +1,6 @@
+{% load static %}
+{% load i18n %}
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -391,7 +394,15 @@
                         </div>
 
                         <!-- Messages -->
-                        <div id="messages"></div>
+                        <div id="messages">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
 
                         <!-- Registration Form -->
                         <form method="POST" id="registrationForm">
@@ -400,6 +411,19 @@
                             <div class="form-step active" id="step1">
                                 <h4 class="mb-4" data-translate="personal_info">Informations Personnelles</h4>
                                 
+                                <div class="form-group">
+                                    <label class="form-label" data-translate="username">Nom d'utilisateur *</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                        <input type="text" class="form-control" name="username" 
+                                               placeholder="Choisissez un nom d'utilisateur unique" 
+                                               required minlength="3" maxlength="30">
+                                    </div>
+                                    <small class="text-muted" data-translate="username_help">Au moins 3 caractères, lettres, chiffres et _ autorisés</small>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -413,21 +437,6 @@
                                             <input type="text" class="form-control" name="last_name" required>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="form-label" data-translate="phone_number">Numéro de Téléphone *</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-phone"></i> +221
-                                        </span>
-                                        <input type="tel" class="form-control" name="phone_number" 
-                                               placeholder="77 123 45 67" 
-                                               pattern="[0-9\s\-]{9,12}"
-                                               title="Format: 77 123 45 67"
-                                               required>
-                                    </div>
-                                    <small class="text-muted" data-translate="phone_help">Exemple: 77 123 45 67 (sans +221)</small>
                                 </div>
 
                                 <div class="form-group">
@@ -601,10 +610,10 @@
                 register_title: "Rejoignez FarmConnect",
                 register_subtitle: "Créez votre compte pour accéder à tous nos services agricoles",
                 personal_info: "Informations Personnelles",
+                username: "Nom d'utilisateur *",
+                username_help: "Au moins 3 caractères, lettres, chiffres et _ autorisés",
                 first_name: "Prénom *",
                 last_name: "Nom *",
-                phone_number: "Numéro de Téléphone *",
-                phone_help: "Ce numéro servira de nom d'utilisateur",
                 email: "Email (optionnel)",
                 continue: "Continuer",
                 location_role: "Localisation et Rôle",
@@ -636,10 +645,10 @@
                 register_title: "Dugg ci FarmConnect",
                 register_subtitle: "Soxla sa compte ngir am yépp jumtuwaay jëmm yi",
                 personal_info: "Xibaar yu Kër gi",
+                username: "Tur jëfandikoo *",
+                username_help: "Muddo ñatti tëriit, àtte ak limu",
                 first_name: "Tur *",
                 last_name: "Sant *",
-                phone_number: "Numero Telefon *",
-                phone_help: "Numero bii dinaa jëfandikoo",
                 email: "Email (bu bañ nekk)",
                 continue: "Támbali",
                 location_role: "Bérab ak sa Jëf",
@@ -740,6 +749,16 @@
                 }
             });
 
+            // Username validation
+            if (step === 1) {
+                const username = document.querySelector('input[name="username"]').value;
+                if (username.length < 3) {
+                    document.querySelector('input[name="username"]').classList.add('is-invalid');
+                    showMessage('Le nom d\'utilisateur doit contenir au moins 3 caractères', 'danger');
+                    isValid = false;
+                }
+            }
+
             // Password validation
             if (step === 3) {
                 const password = document.getElementById('password').value;
@@ -794,49 +813,32 @@
             }
         });
 
-        // Get CSRF token
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-
-        // Phone number formatting for Senegalese numbers
-        document.querySelector('input[name="phone_number"]').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+        // Username validation
+        document.querySelector('input[name="username"]').addEventListener('input', function(e) {
+            let value = e.target.value;
             
-            // Limit to 9 digits (Senegalese mobile numbers without country code)
-            if (value.length > 9) {
-                value = value.substring(0, 9);
-            }
+            // Remove invalid characters (keep only letters, numbers, underscore)
+            value = value.replace(/[^a-zA-Z0-9_]/g, '');
             
-            // Format as XX XXX XX XX
-            if (value.length > 0) {
-                if (value.length <= 2) {
-                    value = value;
-                } else if (value.length <= 5) {
-                    value = value.substring(0, 2) + ' ' + value.substring(2);
-                } else if (value.length <= 7) {
-                    value = value.substring(0, 2) + ' ' + value.substring(2, 5) + ' ' + value.substring(5);
-                } else {
-                    value = value.substring(0, 2) + ' ' + value.substring(2, 5) + ' ' + value.substring(5, 7) + ' ' + value.substring(7);
-                }
+            // Limit length
+            if (value.length > 30) {
+                value = value.substring(0, 30);
             }
             
             e.target.value = value;
+            
+            // Real-time validation feedback
+            if (value.length >= 3) {
+                e.target.classList.remove('is-invalid');
+                e.target.classList.add('is-valid');
+            } else {
+                e.target.classList.remove('is-valid');
+                if (value.length > 0) {
+                    e.target.classList.add('is-invalid');
+                }
+            }
         });
 
-        // Initialize
-        updateLanguage();
     </script>
 </body>
 </html>

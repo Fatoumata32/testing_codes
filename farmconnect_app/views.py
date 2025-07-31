@@ -1,5 +1,3 @@
-# farmconnect_app/views.py - VERSION CORRIGÉE SANS ERREUR DE SYNTAXE
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -37,63 +35,104 @@ def home(request):
     }
     return render(request, 'farmconnect_app/home.html', context)
 
+
 @csrf_protect
 @never_cache
 def custom_login(request):
-    """Vue de connexion personnalisée avec debug"""
+    """Vue de connexion personnalisée avec username simple"""
     
-    print(f"DEBUG: Login view called with method: {request.method}")
+    logger.info(f"Login view called with method: {request.method}")
     
+    # Rediriger si l'utilisateur est déjà connecté
     if request.user.is_authenticated:
-        print("DEBUG: User already authenticated, redirecting to dashboard")
+        logger.info("User already authenticated, redirecting to dashboard")
         return redirect('farmconnect_app:dashboard')
     
+    # Initialiser le formulaire pour les requêtes GET
+    form = AuthenticationForm()
+    
     if request.method == 'POST':
-        print("DEBUG: Processing POST request for login")
+        logger.info("Processing POST request for login")
         
+        # Récupérer les données du formulaire
         username = request.POST.get('username', '').strip()
         password = request.POST.get('password', '')
         remember_me = request.POST.get('remember_me')
+        next_url = request.POST.get('next', request.GET.get('next', ''))
         
-        print(f"DEBUG: Username: {username}, Password length: {len(password) if password else 0}")
+        logger.info(f"Username: {username}, Password length: {len(password) if password else 0}")
+        logger.info(f"Next URL: {next_url}")
         
+        # Validation des champs requis
         if not username or not password:
-            print("DEBUG: Missing username or password")
-            messages.error(request, _('Veuillez remplir tous les champs.'))
-            return render(request, 'registration/login.html')
-        
-        # Tentative d'authentification
-        print(f"DEBUG: Attempting authentication for user: {username}")
-        user = authenticate(request, username=username, password=password)
-        
-        if user is not None:
-            print(f"DEBUG: Authentication successful for user: {user.username}")
-            if user.is_active:
-                print("DEBUG: User is active, logging in")
-                login(request, user)
-                
-                # Gestion du "Se souvenir de moi"
-                if not remember_me:
-                    request.session.set_expiry(0)
-                else:
-                    request.session.set_expiry(1209600)  # 2 semaines
-                
-                messages.success(request, _('Connexion réussie ! Bienvenue {}').format(user.get_full_name() or user.username))
-                
-                # Redirection
-                redirect_to = request.GET.get('next', reverse('farmconnect_app:dashboard'))
-                print(f"DEBUG: Redirecting to: {redirect_to}")
-                return HttpResponseRedirect(redirect_to)
-            else:
-                print("DEBUG: User account is inactive")
-                messages.error(request, _('Votre compte est désactivé. Contactez l\'administrateur.'))
+            logger.warning("Missing username or password")
+            messages.error(request, _('Veuillez remplir tous les champs requis.'))
+            form = AuthenticationForm(data=request.POST)
         else:
-            print("DEBUG: Authentication failed")
-            messages.error(request, _('Identifiant ou mot de passe incorrect.'))
+            # Créer le formulaire avec les données POST pour la validation
+            form = AuthenticationForm(data=request.POST)
+            
+            # Tentative d'authentification avec username simple
+            logger.info(f"Attempting authentication for user: {username}")
+            user = authenticate(request, username=username, password=password)
+            
+            if user is not None:
+                logger.info(f"Authentication successful for user: {user.username}")
+                
+                if user.is_active:
+                    logger.info("User is active, logging in")
+                    login(request, user)
+                    
+                    # Gestion du "Se souvenir de moi"
+                    if remember_me:
+                        # Session expire dans 2 semaines
+                        request.session.set_expiry(1209600)
+                        logger.info("Remember me enabled - session set to 2 weeks")
+                    else:
+                        # Session expire à la fermeture du navigateur
+                        request.session.set_expiry(0)
+                        logger.info("Remember me disabled - session expires on browser close")
+                    
+                    # Message de succès
+                    user_display_name = user.get_full_name() or user.username
+                    messages.success(
+                        request, 
+                        _('Connexion réussie ! Bienvenue {}').format(user_display_name)
+                    )
+                    
+                    # Déterminer l'URL de redirection
+                    if next_url:
+                        redirect_to = next_url
+                    else:
+                        try:
+                            redirect_to = reverse('farmconnect_app:dashboard')
+                        except:
+                            redirect_to = '/dashboard/'
+                    
+                    logger.info(f"Redirecting authenticated user to: {redirect_to}")
+                    
+                    # Effectuer la redirection
+                    return HttpResponseRedirect(redirect_to)
+                else:
+                    logger.warning(f"User account {user.username} is inactive")
+                    messages.error(
+                        request, 
+                        _('Votre compte est désactivé. Contactez l\'administrateur.')
+                    )
+            else:
+                logger.warning(f"Authentication failed for username: {username}")
+                messages.error(
+                    request, 
+                    _('Nom d\'utilisateur ou mot de passe incorrect.')
+                )
     
-    # GET request ou erreur de POST
-    form = AuthenticationForm()
-    redirect_to = request.GET.get('next', reverse('farmconnect_app:dashboard'))
+    # Préparer le contexte pour le template
+    try:
+        default_redirect = reverse('farmconnect_app:dashboard')
+    except:
+        default_redirect = '/dashboard/'
+    
+    redirect_to = request.GET.get('next', default_redirect)
     
     context = {
         'form': form,
@@ -101,7 +140,7 @@ def custom_login(request):
         'redirect_field_value': redirect_to,
     }
     
-    print("DEBUG: Rendering login template")
+    logger.info("Rendering login template")
     return render(request, 'registration/login.html', context)
 
 def custom_logout(request):
@@ -115,7 +154,7 @@ def custom_logout(request):
     return redirect('farmconnect_app:home')
 
 def register(request):
-    """Vue d'inscription avec debug - Adaptée au modèle User"""
+    """Vue d'inscription avec username simple"""
     
     print(f"DEBUG: Register view called with method: {request.method}")
     
@@ -131,9 +170,9 @@ def register(request):
             data = request.POST
             
             # Debug des données reçues
+            username = data.get('username', '').strip()
             first_name = data.get('first_name', '').strip()
             last_name = data.get('last_name', '').strip()
-            phone_number = data.get('phone_number', '').strip()
             email = data.get('email', '').strip()
             password = data.get('password', '')
             confirm_password = data.get('confirm_password', '')
@@ -142,13 +181,13 @@ def register(request):
             language = data.get('language', 'fr')
             role = data.get('role', 'farmer')
             
-            print(f"DEBUG: Parsed data - Name: {first_name} {last_name}, Phone: {phone_number}")
+            print(f"DEBUG: Parsed data - Username: {username}, Name: {first_name} {last_name}")
             
             # Validation des champs requis
             required_fields = {
+                'username': username,
                 'first_name': first_name,
                 'last_name': last_name,
-                'phone_number': phone_number,
                 'password': password
             }
             
@@ -165,33 +204,22 @@ def register(request):
                 messages.error(request, _('Les mots de passe ne correspondent pas.'))
                 return render(request, 'registration/register.html')
             
-            # Nettoyage et validation du numéro de téléphone selon votre modèle
-            phone_clean = phone_number.replace(' ', '').replace('-', '').replace('(', '').replace(')', '')
-            
-            # Formatage selon le regex de votre modèle: +221XXXXXXXXX
-            if not phone_clean.startswith('+221'):
-                if phone_clean.startswith('221'):
-                    phone_clean = '+' + phone_clean
-                elif phone_clean.startswith('77') or phone_clean.startswith('78') or phone_clean.startswith('76') or phone_clean.startswith('70'):
-                    # Numéros sénégalais typiques
-                    phone_clean = '+221' + phone_clean
-                else:
-                    # Essayer d'ajouter +221 par défaut
-                    phone_clean = '+221' + phone_clean.lstrip('0')
-            
-            print(f"DEBUG: Cleaned phone number: {phone_clean}")
-            
-            # Validation du format avec le regex de votre modèle
-            phone_regex = r'^\+221\d{9}$'
-            if not re.match(phone_regex, phone_clean):
-                print(f"DEBUG: Phone number format invalid: {phone_clean}")
-                messages.error(request, _('Format de numéro invalide. Utilisez le format: +221XXXXXXXXX'))
+            # Validation du nom d'utilisateur
+            if len(username) < 3:
+                print("DEBUG: Username too short")
+                messages.error(request, _('Le nom d\'utilisateur doit contenir au moins 3 caractères.'))
                 return render(request, 'registration/register.html')
             
-            # Vérification de l'unicité du numéro de téléphone
-            if User.objects.filter(Q(username=phone_clean) | Q(phone_number=phone_clean)).exists():
-                print("DEBUG: Phone number already exists")
-                messages.error(request, _('Ce numéro de téléphone est déjà utilisé.'))
+            # Vérification de l'unicité du nom d'utilisateur
+            if User.objects.filter(username=username).exists():
+                print("DEBUG: Username already exists")
+                messages.error(request, _('Ce nom d\'utilisateur est déjà utilisé.'))
+                return render(request, 'registration/register.html')
+            
+            # Vérification de l'unicité de l'email (si fourni)
+            if email and User.objects.filter(email=email).exists():
+                print("DEBUG: Email already exists")
+                messages.error(request, _('Cette adresse email est déjà utilisée.'))
                 return render(request, 'registration/register.html')
             
             # Validation du rôle selon vos choix
@@ -206,15 +234,14 @@ def register(request):
             
             print(f"DEBUG: Creating user with role: {role}, language: {language}")
             
-            # Création de l'utilisateur
+            # Création de l'utilisateur avec username simple
             print("DEBUG: Creating new user")
             user = User.objects.create_user(
-                username=phone_clean,
+                username=username,
                 email=email,
                 password=password,
                 first_name=first_name,
                 last_name=last_name,
-                phone_number=phone_clean,
                 region=region,
                 village=village,
                 preferred_language=language,
@@ -338,7 +365,7 @@ def password_reset_request(request):
             except User.DoesNotExist:
                 messages.success(request, _('Un lien de réinitialisation sera envoyé si ce compte existe.'))
         else:
-            messages.error(request, _('Veuillez saisir votre identifiant.'))
+            messages.error(request, _('Veuillez saisir votre nom d\'utilisateur.'))
     
     return render(request, 'registration/password_reset.html')
 
@@ -355,3 +382,53 @@ def debug_view(request):
     }
     
     return render(request, 'farmconnect_app/debug.html', context)
+
+
+def community(request):
+    """Page communauté avec statistiques et informations"""
+    
+    # Calculer les statistiques de la communauté
+    total_farmers = User.objects.filter(role='farmer', is_active=True).count()
+    total_regions = User.objects.values('region').distinct().count()
+    total_crops = 50  # Valeur par défaut, à remplacer par un modèle Crop si vous en avez
+    total_workshops = 100  # Valeur par défaut, à remplacer par un modèle Workshop si vous en avez
+    
+    # Prochains ateliers (exemple - à adapter selon vos modèles)
+    upcoming_workshops = []
+    # Si vous avez un modèle Workshop:
+    # from datetime import date
+    # upcoming_workshops = Workshop.objects.filter(date__gte=date.today()).order_by('date')[:4]
+    
+    # Témoignages (exemple - à adapter selon vos modèles)
+    testimonials = []
+    # Si vous avez un modèle Testimonial:
+    # testimonials = Testimonial.objects.filter(is_published=True).order_by('-created_at')[:3]
+    
+    context = {
+        'total_farmers': total_farmers,
+        'total_regions': total_regions,
+        'total_crops': total_crops,
+        'total_workshops': total_workshops,
+        'upcoming_workshops': upcoming_workshops,
+        'testimonials': testimonials,
+        # 'community_image': None,  # Ajoutez si vous avez un modèle pour les images
+    }
+    
+    return render(request, 'community/community.html', context)
+
+def about(request):
+    """Page à propos de FarmConnect"""
+    
+    # Statistiques générales
+    stats = {
+        'total_users': User.objects.count(),
+        'active_farmers': User.objects.filter(role='farmer', is_active=True).count(),
+        'regions_covered': User.objects.values('region').distinct().count(),
+        'years_experience': 2,  # Depuis le lancement de la plateforme
+    }
+    
+    context = {
+        'stats': stats,
+    }
+    
+    return render(request, 'farmconnect_app/about.html', context)

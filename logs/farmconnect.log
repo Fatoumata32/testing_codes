@@ -1,0 +1,56 @@
+INFO 2025-07-31 07:19:49,313 views 27000 20708 Login view called with method: GET
+INFO 2025-07-31 07:19:49,316 views 27000 20708 Rendering login template
+INFO 2025-07-31 07:25:47,212 views 7848 26060 Login view called with method: GET
+INFO 2025-07-31 07:25:47,212 views 7848 26060 Rendering login template
+INFO 2025-07-31 07:26:06,380 views 7848 26060 Login view called with method: POST
+INFO 2025-07-31 07:26:06,380 views 7848 26060 Processing POST request for login
+INFO 2025-07-31 07:26:06,381 views 7848 26060 Username: 78 542 38 33, Password length: 6
+INFO 2025-07-31 07:26:06,381 views 7848 26060 Next URL: /fr/dashboard/
+INFO 2025-07-31 07:26:06,381 views 7848 26060 Attempting authentication for user: 78 542 38 33
+WARNING 2025-07-31 07:26:06,642 views 7848 26060 Authentication failed for username: 78 542 38 33
+INFO 2025-07-31 07:26:06,642 views 7848 26060 Rendering login template
+INFO 2025-07-31 07:31:11,329 views 7848 13432 Login view called with method: GET
+INFO 2025-07-31 07:31:11,329 views 7848 13432 Rendering login template
+INFO 2025-07-31 07:32:24,943 views 7848 13432 Login view called with method: POST
+INFO 2025-07-31 07:32:24,943 views 7848 13432 Processing POST request for login
+INFO 2025-07-31 07:32:24,943 views 7848 13432 Username: 77 777 77 77, Password length: 9
+INFO 2025-07-31 07:32:24,943 views 7848 13432 Next URL: /fr/dashboard/
+INFO 2025-07-31 07:32:24,944 views 7848 13432 Attempting authentication for user: 77 777 77 77
+WARNING 2025-07-31 07:32:25,199 views 7848 13432 Authentication failed for username: 77 777 77 77
+INFO 2025-07-31 07:32:25,200 views 7848 13432 Rendering login template
+INFO 2025-07-31 07:33:03,973 views 7848 13432 Login view called with method: POST
+INFO 2025-07-31 07:33:03,973 views 7848 13432 Processing POST request for login
+INFO 2025-07-31 07:33:03,973 views 7848 13432 Username: eljimalickseye@gmail.com, Password length: 9
+INFO 2025-07-31 07:33:03,974 views 7848 13432 Next URL: /fr/dashboard/
+INFO 2025-07-31 07:33:03,974 views 7848 13432 Attempting authentication for user: eljimalickseye@gmail.com
+WARNING 2025-07-31 07:33:04,219 views 7848 13432 Authentication failed for username: eljimalickseye@gmail.com
+INFO 2025-07-31 07:33:04,220 views 7848 13432 Rendering login template
+INFO 2025-07-31 07:39:14,745 views 12480 29068 Login view called with method: POST
+INFO 2025-07-31 07:39:14,746 views 12480 29068 Processing POST request for login
+INFO 2025-07-31 07:39:14,746 views 12480 29068 Username: eljimalickseye@gmail.com, Password length: 9
+INFO 2025-07-31 07:39:14,746 views 12480 29068 Next URL: /fr/dashboard/
+INFO 2025-07-31 07:39:14,746 views 12480 29068 Attempting authentication for user: eljimalickseye@gmail.com
+WARNING 2025-07-31 07:39:14,970 views 12480 29068 Authentication failed for username: eljimalickseye@gmail.com
+INFO 2025-07-31 07:39:14,972 views 12480 29068 Rendering login template
+INFO 2025-07-31 07:43:39,804 views 12480 28448 Login view called with method: GET
+INFO 2025-07-31 07:43:39,804 views 12480 28448 Rendering login template
+INFO 2025-07-31 07:43:54,802 views 12480 28448 Login view called with method: POST
+INFO 2025-07-31 07:43:54,802 views 12480 28448 Processing POST request for login
+INFO 2025-07-31 07:43:54,802 views 12480 28448 Username: malick, Password length: 9
+INFO 2025-07-31 07:43:54,803 views 12480 28448 Next URL: /fr/dashboard/
+INFO 2025-07-31 07:43:54,803 views 12480 28448 Attempting authentication for user: malick
+INFO 2025-07-31 07:43:55,034 views 12480 28448 Authentication successful for user: malick
+INFO 2025-07-31 07:43:55,034 views 12480 28448 User is active, logging in
+INFO 2025-07-31 07:43:55,040 views 12480 28448 Remember me disabled - session expires on browser close
+INFO 2025-07-31 07:43:55,040 views 12480 28448 Redirecting authenticated user to: /fr/dashboard/
+INFO 2025-07-31 08:03:13,522 views 17452 23468 Login view called with method: GET
+INFO 2025-07-31 08:03:13,522 views 17452 23468 Rendering login template
+INFO 2025-07-31 08:03:29,422 views 17452 23468 Login view called with method: POST
+INFO 2025-07-31 08:03:29,423 views 17452 23468 Processing POST request for login
+INFO 2025-07-31 08:03:29,423 views 17452 23468 Username: malick, Password length: 9
+INFO 2025-07-31 08:03:29,423 views 17452 23468 Next URL: /fr/dashboard/
+INFO 2025-07-31 08:03:29,424 views 17452 23468 Attempting authentication for user: malick
+INFO 2025-07-31 08:03:29,683 views 17452 23468 Authentication successful for user: malick
+INFO 2025-07-31 08:03:29,683 views 17452 23468 User is active, logging in
+INFO 2025-07-31 08:03:29,689 views 17452 23468 Remember me disabled - session expires on browser close
+INFO 2025-07-31 08:03:29,689 views 17452 23468 Redirecting authenticated user to: /fr/dashboard/

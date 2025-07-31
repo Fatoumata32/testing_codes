@@ -54,3 +54,40 @@ def crop_search(request):
         crops = Crop.objects.filter(is_active=True)
     
     return render(request, 'crops/search.html', {'crops': crops, 'query': query})
+
+# crops/views.py (créez ces vues si elles n'existent pas)
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def crop_list(request):
+    """Liste des cultures et conseils agricoles"""
+    context = {
+        'crops': [],  # À remplacer par vos données
+        'tips': [],   # À remplacer par vos conseils
+    }
+    return render(request, 'crops/list.html', context)
+
+@login_required
+def crop_detail(request, crop_id):
+    """Détail d'une culture spécifique"""
+    context = {
+        'crop_id': crop_id,
+    }
+    return render(request, 'crops/detail.html', context)
+
+@login_required
+def farming_tips(request):
+    """Conseils agricoles"""
+    context = {
+        'tips': [],
+    }
+    return render(request, 'crops/tips.html', context)
+
+@login_required
+def farming_calendar(request):
+    """Calendrier agricole"""
+    context = {
+        'calendar_data': {},
+    }
+    return render(request, 'crops/calendar.html', context)

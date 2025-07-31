@@ -1,36 +1,123 @@
 {% load static %}
 {% load i18n %}
+
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}">
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}FarmConnect Senegal{% endblock %}</title>
     
-    <!-- Bootstrap & FontAwesome -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    <!-- Custom CSS FarmConnect -->
-    <link href="{% static 'css/farmconnect.css' %}" rel="stylesheet">
-    
     {% block extra_css %}{% endblock %}
+    
+    <style>
+        :root {
+            --primary-green: #2d5016;
+            --light-green: #4a7c59;
+            --accent-yellow: #f4d03f;
+            --text-dark: #2c3e50;
+            --pure-white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            color: var(--pure-white) !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-yellow) !important;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-light {
+            border-color: var(--accent-yellow);
+            color: var(--accent-yellow);
+        }
+
+        .btn-outline-light:hover {
+            background-color: var(--accent-yellow);
+            color: var(--primary-green);
+        }
+
+        .main-content {
+            min-height: calc(100vh - 200px);
+            padding: 2rem 0;
+        }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+        }
+
+        .alert-info {
+            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+            color: #0c5460;
+        }
+
+        .alert-warning {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            color: #856404;
+        }
+
+        .alert-danger {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+        }
+
+        footer {
+            background: var(--primary-green);
+            color: var(--pure-white);
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="{% url 'farmconnect_app:home' %}">
-                <i class="fas fa-seedling"></i>
-                <span data-translate="app_title">FarmConnect Senegal</span>
+                <i class="fas fa-seedling"></i> FarmConnect Senegal
             </a>
+            
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'farmconnect_app:home' %}" data-translate="nav_home">{{ _("Accueil") }}</a>
+                        <a class="nav-link" href="{% url 'farmconnect_app:home' %}" data-translate="nav_home">
+                            {{ _("Accueil") }}
+                        </a>
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
@@ -38,121 +125,143 @@
                                 <i class="fas fa-tachometer-alt"></i> {{ _("Tableau de Bord") }}
                             </a>
                         </li>
+                        
+                        <!-- Vérification de l'existence des URLs avant de les utiliser -->
+                        {% url 'crops:list' as crops_url %}
+                        {% if crops_url %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ crops_url }}" data-translate="nav_tips">
+                                    {{ _("Conseils") }}
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" onclick="alert('Fonctionnalité en développement')" data-translate="nav_tips">
+                                    {{ _("Conseils") }}
+                                </a>
+                            </li>
+                        {% endif %}
+                        
+                        {% url 'chat:interface' as chat_url %}
+                        {% if chat_url %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ chat_url }}" data-translate="nav_chat">
+                                    {{ _("Assistant") }}
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" onclick="alert('Assistant IA en développement')" data-translate="nav_chat">
+                                    {{ _("Assistant") }}
+                                </a>
+                            </li>
+                        {% endif %}
+                        
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'crops:list' %}" data-translate="nav_tips">{{ _("Conseils") }}</a>
+                            <a class="nav-link" href="{% url 'farmconnect_app:community' %}" data-translate="nav_community">
+                                {{ _("Communauté") }}
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'chat:interface' %}" data-translate="nav_chat">{{ _("Assistant") }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'community:forum' %}" data-translate="nav_community">{{ _("Communauté") }}</a>
-                        </li>
+                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="fas fa-user"></i> {{ user.get_full_name|default:user.username }}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{% url 'farmconnect_app:profile' %}">{{ _("Profil") }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'farmconnect_app:profile' %}">
+                                    <i class="fas fa-user-edit"></i> {{ _("Mon Profil") }}
+                                </a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'logout' %}">{{ _("Déconnexion") }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">
+                                    <i class="fas fa-sign-out-alt"></i> {{ _("Déconnexion") }}
+                                </a></li>
                             </ul>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">{{ _("Connexion") }}</a>
+                            <a class="nav-link" href="{% url 'farmconnect_app:community' %}" data-translate="nav_community">
+                                {{ _("Communauté") }}
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'farmconnect_app:register' %}">{{ _("Inscription") }}</a>
+                            <a class="nav-link" href="{% url 'farmconnect_app:about' %}" data-translate="nav_about">
+                                {{ _("À propos") }}
+                            </a>
                         </li>
                     {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'farmconnect_app:investors' %}" data-translate="nav_investors">{{ _("Investisseurs") }}</a>
-                    </li>
                 </ul>
                 
-                <!-- Language Selector -->
-                <div class="language-selector">
-                    <button class="language-btn {% if LANGUAGE_CODE == 'fr' %}active{% endif %}" data-lang="fr" aria-label="Switch to French">
-                        <span>Français</span>
-                    </button>
-                    <button class="language-btn {% if LANGUAGE_CODE == 'wo' %}active{% endif %}" data-lang="wo" aria-label="Switch to Wolof">
-                        <span>Wolof</span>
-                    </button>
-                </div>
+                <!-- Authentication Links -->
+                {% if not user.is_authenticated %}
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'login' %}" class="btn btn-outline-light">
+                            {{ _("Connexion") }}
+                        </a>
+                        <a href="{% url 'farmconnect_app:register' %}" class="btn btn-outline-light">
+                            {{ _("Inscription") }}
+                        </a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main>
-        {% if messages %}
+    <!-- Messages -->
+    {% if messages %}
+        <div class="container mt-3">
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="margin-top: 80px;">
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
                     {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             {% endfor %}
-        {% endif %}
-        
-        {% block content %}{% endblock %}
+        </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
     </main>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h5 data-translate="footer_about">{{ _("À Propos") }}</h5>
-                    <p data-translate="footer_description">{{ _("FarmConnect Senegal connecte les petits agriculteurs aux technologies modernes pour une agriculture durable et prospère.") }}</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link" aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-link" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-seedling"></i> FarmConnect Senegal</h5>
+                    <p>{{ _("Connecter les agriculteurs sénégalais pour un avenir durable") }}</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2025 FarmConnect Senegal. {{ _("Tous droits réservés") }}.</p>
+                    <div>
+                        <a href="#" class="text-light me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
-                <div class="footer-section">
-                    <h5 data-translate="footer_services">{{ _("Services") }}</h5>
-                    <ul>
-                        <li><a href="{% url 'weather:dashboard' %}" data-translate="service_weather">{{ _("Prévisions Météo") }}</a></li>
-                        <li><a href="{% url 'crops:list' %}" data-translate="service_tips">{{ _("Conseils Agricoles") }}</a></li>
-                        <li><a href="{% url 'chat:interface' %}" data-translate="service_assistant">{{ _("Assistant IA") }}</a></li>
-                        <li><a href="{% url 'community:forum' %}" data-translate="service_community">{{ _("Communauté") }}</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h5 data-translate="footer_support">{{ _("Support") }}</h5>
-                    <ul>
-                        <li><a href="#" data-translate="support_help">{{ _("Centre d'Aide") }}</a></li>
-                        <li><a href="#" data-translate="support_contact">{{ _("Contact") }}</a></li>
-                        <li><a href="#" data-translate="support_faq">{{ _("FAQ") }}</a></li>
-                        <li><a href="#" data-translate="support_feedback">{{ _("Commentaires") }}</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h5 data-translate="footer_contact">{{ _("Contact") }}</h5>
-                    <p><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</p>
-                    <p><i class="fas fa-phone"></i> +221 77 123 4567</p>
-                    <p><i class="fas fa-envelope"></i> info@farmconnect.sn</p>
-                </div>
-            </div>
-            <div class="text-center pt-3" style="border-top: 1px solid rgba(255,255,255,0.1);">
-                <p>© 2025 FarmConnect Senegal. <span data-translate="footer_rights">{{ _("Tous droits réservés.") }}</span></p>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'js/farmconnect.js' %}"></script>
+    
     {% block extra_js %}{% endblock %}
+    
+    <script>
+        // Auto-hide messages after 5 seconds
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                if (alert.querySelector('.btn-close')) {
+                    alert.style.opacity = '0';
+                    setTimeout(function() {
+                        alert.remove();
+                    }, 300);
+                }
+            });
+        }, 5000);
+    </script>
 </body>
 </html>

@@ -441,7 +441,7 @@
 
                 <!-- Login Form -->
                 <div id="loginContent" class="login-content">
-                    <form method="POST" id="loginForm" action="{% url 'login' %}">
+                    <form method="POST" id="loginForm">
                         {% csrf_token %}
                         
                         <div class="form-group">
@@ -449,7 +449,7 @@
                                    class="form-control {% if form.username.errors %}error{% endif %}" 
                                    name="username" 
                                    value="{{ form.username.value|default:'' }}"
-                                   placeholder="{% trans 'Numéro de téléphone ou email' %}" 
+                                   placeholder="{% trans 'Nom d\'utilisateur' %}" 
                                    required
                                    autocomplete="username">
                             {% if form.username.errors %}
@@ -492,9 +492,7 @@
                         </div>
 
                         <!-- Redirect field -->
-                        {% if redirect_field_value %}
-                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
-                        {% endif %}
+                        <input type="hidden" name="next" value="{{ redirect_field_value|default:'/dashboard/' }}">
 
                         <button type="submit" class="btn-login" id="loginBtn">
                             {% trans "CONNEXION" %}
@@ -588,7 +586,16 @@
             submitBtn.classList.add('loading');
             submitBtn.textContent = '{% trans "CONNEXION EN COURS..." %}';
 
-            // Allow form to submit normally to Django
+            // DEBUG: Log form data
+            console.log('Form submitting with:', {
+                username: username,
+                password: password ? 'présent' : 'absent',
+                action: this.action || 'défaut',
+                method: this.method
+            });
+
+            // Allow form to submit normally
+            return true;
         });
 
         // Auto-focus on first input
@@ -600,39 +607,25 @@
 
             // Remove loading state if page reloads with errors
             const submitBtn = document.getElementById('loginBtn');
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('loading');
-            submitBtn.textContent = '{% trans "CONNEXION" %}';
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+                submitBtn.textContent = '{% trans "CONNEXION" %}';
+            }
         });
 
         // Enter key navigation
         document.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 const activeElement = document.activeElement;
-                if (activeElement.name === 'username') {
-                    document.getElementById('password').focus();
-                    e.preventDefault();
-                }
-            }
-        });
-
-        // Phone number formatting for username field
-        document.querySelector('input[name="username"]').addEventListener('input', function(e) {
-            let value = e.target.value;
-            
-            // If it looks like a phone number (starts with digits), format it
-            if (/^\d/.test(value)) {
-                value = value.replace(/\D/g, ''); // Remove non-digits
-                if (value.length > 0 && !value.startsWith('221')) {
-                    // Auto-add country code if not present
-                    if (value.length <= 9) {
-                        // Format as Senegalese number
-                        value = value.replace(/(\d{2})(\d{3})(\d{2})(\d{2})/, '$1 $2 $3 $4');
+                if (activeElement && activeElement.name === 'username') {
+                    const passwordField = document.getElementById('password');
+                    if (passwordField) {
+                        passwordField.focus();
+                        e.preventDefault();
                     }
                 }
             }
-            
-            e.target.value = value;
         });
 
         // Hide messages after 5 seconds
@@ -641,7 +634,9 @@
             messages.forEach(function(message) {
                 message.style.opacity = '0';
                 setTimeout(function() {
-                    message.remove();
+                    if (message.parentNode) {
+                        message.remove();
+                    }
                 }, 300);
             });
         }, 5000);
