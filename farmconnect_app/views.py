@@ -18,6 +18,7 @@ import re
 # Configuration du logging pour debug
 logger = logging.getLogger(__name__)
 
+
 def home(request):
     """Page d'accueil avec gestion sécurisée des imports"""
     
@@ -432,3 +433,12 @@ def about(request):
     }
     
     return render(request, 'farmconnect_app/about.html', context)
+
+def community_view(request):
+    return render(request, 'farmconnect_app/community.html')
+
+def investors_view(request):
+    return render(request, 'farmconnect_app/investors.html')
+
+def tools_view(request):
+    return render(request, 'farmconnect_app/tools.html')

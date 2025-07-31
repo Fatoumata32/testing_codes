@@ -218,17 +218,26 @@
                             <i class="fas fa-cloud-sun me-2"></i>
                             Voir la Météo
                         </a>
-                        <a href="/" class="btn btn-outline-success">
+                        <a href="#" class="btn btn-outline-success">
                             <i class="fas fa-leaf me-2"></i>
                             Conseils Agricoles
                         </a>
-                        <a href="/" class="btn btn-outline-info">
+                        <!-- Ligne 221 corrigée -->
+                        <a href="{% url 'farmconnect_app:community' %}" class="btn btn-outline-success">
                             <i class="fas fa-users me-2"></i>
                             Communauté
                         </a>
                         <a href="{% url 'farmconnect_app:profile' %}" class="btn btn-outline-secondary">
                             <i class="fas fa-cog me-2"></i>
                             Paramètres
+                        </a>
+                        <a  href="{% url 'farmconnect_app:investors' %}"  class="btn btn-outline-success">
+                            <i class="fas fa-hand-holding-usd"></i>   
+                            Investisseurs
+                        </a>
+                        <a  href="{% url 'farmconnect_app:tools' %}"  class="btn btn-outline-success">
+                            <i class="fas fa-hand-holding-usd"></i>   
+                            Tools
                         </a>
                     </div>
                 </div>

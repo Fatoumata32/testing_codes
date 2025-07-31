@@ -3,11 +3,22 @@ from . import views
 
 app_name = 'farmconnect_app'
 
+from django.urls import include, path
+
+urlpatterns = [
+    # autres routes ici
+    path('community/', include(('community.urls', 'community'), namespace='community')),
+    path('investisseurs/', views.investors_view, name='investors'),
+    path('tools/', views.tools_view, name='tools'),
+]
+
+
 urlpatterns = [
     path('home/', views.home, name='home'),
     path('register/', views.register, name='register'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('investors/', views.investors, name='investors'),
+    
 ]
 # farmconnect_app/urls.py - Mise à jour de vos URLs
 
@@ -27,6 +38,7 @@ urlpatterns = [
     path('login/', views.custom_login, name='login'),
     path('logout/', views.custom_logout, name='logout'),
     path('register/', views.register, name='register'),
+    path('community/', views.community_view, name='community_view'),
     
     # Réinitialisation de mot de passe
     path('password-reset/', views.password_reset_request, name='password_reset'),
@@ -72,6 +84,7 @@ urlpatterns = [
     path('community/', include('community.urls')),
     path('marketplace/', include('marketplace.urls')),
     path('chat/', include('chat.urls')),
+    path('community/', views.community_view, name='community_view'),
     
     # Authentification Django par défaut (fallback)
     path('accounts/', include('django.contrib.auth.urls')),
@@ -110,6 +123,7 @@ urlpatterns = [
     
     path('community/', views.community, name='community'),
     path('about/', views.about, name='about'),
+    path('tools/', views.tools_view, name='tools'),
     
     # Réinitialisation de mot de passe - SIMPLES
     path('password-reset/', views.password_reset_request, name='password_reset'),
